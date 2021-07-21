@@ -23,15 +23,16 @@
 - For projects located in the `nodejs` folder you must run `npm install` and then `npm start`.
 - For projects located in the `python` folder you must run `pip install -r requirements.txt` and then `python app.py`.
 - For project located in the `dotnet-csharp` folder just open the .csproj file using Visual Studio 2019 or later.
-| Folder                          | Description                                                                                                                           |
-|---------------------------------|---------------------------------------------------------------------------------------------------------------------------------------|
-| connect_to_selenium             | This code illustrates how to start a browser in Kameleo and then automate actions using Selenium commands.                            |
-| create_profile                  | This is an example for creating a Kameleo profile.                                                                                    |
-| external_browser_with_puppeteer | This example showcases a way to start a browser using Puppeteer and connect it with Kameleo to add browser fingerprint protection.    |
-| find_baseprofile                | This quick example shows you different ways to find the perfect base profile for your work.                                           |
-| manage_cookies                  | Kameleo's features to edit, modify or create cookies are easy to use, just a few lines of code needed.                                |
-| profile_save_load               | Quick example of saving and loading profiles to/from .kameleo files on your computer.                                                 |
-| start_chrome                    | In this example you can see how you can influence the started browser type using profile attributes.                                  |
-| start_with_proxy                | Using any HTTP, SOCKS or SSH proxy is easy with Kameleo, just check out these few lines of code to see yourself.                      |
-| update_profile                  | This code is to illustrate how easy is to modify profile attributes after you have created one.                                       |
-| start_browser_with_additional_web_driver_settings | For advanced developers we provide an opportunity to add additional WebDriver settings when the browser is started. |
+
+| Folder                          | Description                                                                                                                        |
+|---------------------------------|------------------------------------------------------------------------------------------------------------------------------------|
+| connect_to_selenium             | This code illustrates how to start a browser in Kameleo and then automate actions using Selenium commands.                         |
+| create_profile                  | This is an example for creating a Kameleo profile.                                                                                 |
+| external_browser_with_puppeteer | This example showcases a way to start a browser using Puppeteer and connect it with Kameleo to add browser fingerprint protection. |
+| find_baseprofile                | This quick example shows you different ways to find the perfect base profile for your work.                                        |
+| manage_cookies                  | Kameleo's features to edit, modify or create cookies are easy to use, just a few lines of code needed.                             |
+| profile_save_load               | Quick example of saving and loading profiles to/from .kameleo files on your computer.                                              |
+| start_chrome                    | In this example you can see how you can influence the started browser type using profile attributes.                               |
+| start_with_proxy                | Using any HTTP, SOCKS or SSH proxy is easy with Kameleo, just check out these few lines of code to see yourself.                   |
+| update_profile                  | This code is to illustrate how easy is to modify profile attributes after you have created one.                                    |
+| start_browser_with_additionweb_driver_settings | For advanced developers we provide an opportunity to add additional WebDriver settings when the browser is started. |
