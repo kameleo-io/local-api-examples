@@ -38,6 +38,7 @@ const { Builder, By, Key, until} = require('selenium-webdriver');
 
         // Navigate the browser and print the title to the console
         await webdriver.get('https://google.com');
+        await webdriver.findElement(By.css('div[aria-modal="true"][tabindex="0"] button:not([aria-label]):last-child')).click();
         await webdriver.findElement(By.name('q')).sendKeys('Kameleo', Key.ENTER);
         await webdriver.wait(until.elementLocated(By.id('main')));
         const title = await webdriver.getTitle();

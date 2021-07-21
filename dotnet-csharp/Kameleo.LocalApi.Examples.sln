@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StartWithProxy", "start_wit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateProfile", "update_profile\UpdateProfile.csproj", "{71C2DCBA-063F-418D-8AFD-2BB2E44A1900}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StartBrowserWithAdditionalWebDriverSettings", "start_browser_with_additional_web_driver_settings\StartBrowserWithAdditionalWebDriverSettings.csproj", "{3D70BFC4-DB3D-4B51-AD19-4A25A3411930}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{71C2DCBA-063F-418D-8AFD-2BB2E44A1900}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{71C2DCBA-063F-418D-8AFD-2BB2E44A1900}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{71C2DCBA-063F-418D-8AFD-2BB2E44A1900}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D70BFC4-DB3D-4B51-AD19-4A25A3411930}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D70BFC4-DB3D-4B51-AD19-4A25A3411930}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D70BFC4-DB3D-4B51-AD19-4A25A3411930}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D70BFC4-DB3D-4B51-AD19-4A25A3411930}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -15,7 +15,7 @@ const { KameleoLocalApiClient, BuilderForCreateProfile } = require('@kameleo/loc
 
         // Create a new profile with recommended settings
         // Choose one of the Chrome BaseProfiles
-        // You can setup here all of the profile options like Webgl
+        // You can setup here all of the profile options like WebGL, password manager and start page
         const createProfileRequest = BuilderForCreateProfile
             .forBaseProfile(chromeBaseProfileList[0].id)
             .setRecommendedDefaults()
@@ -23,6 +23,8 @@ const { KameleoLocalApiClient, BuilderForCreateProfile } = require('@kameleo/loc
                 'noise',
                 { vendor: 'Google Inc.', renderer: 'ANGLE (Intel(R) HD Graphics 630 Direct3D11 vs_5_0 ps_5_0)' },
             )
+            .setPasswordManager('enabled')
+            .setStartPage('https://kameleo.io')
             .build();
         const profile = await client.createProfile({ body: createProfileRequest });
 

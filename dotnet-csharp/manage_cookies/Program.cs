@@ -40,8 +40,6 @@ namespace ManageCookies
 
             // Navigate to a site which give you cookies
             webdriver.Navigate().GoToUrl("https://google.com");
-            webdriver.FindElement(By.Name("q")).SendKeys("Kameleo");
-            webdriver.FindElement(By.Name("q")).SendKeys(Keys.Enter);
             await Task.Delay(15000);
 
             webdriver.Navigate().GoToUrl("https://whoer.net");

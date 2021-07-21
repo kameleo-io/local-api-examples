@@ -38,7 +38,6 @@ const { Builder, By, Key } = require('selenium-webdriver');
 
         // Navigate to a site which give you cookies
         await webdriver.get('https://google.com');
-        await webdriver.findElement(By.name('q')).sendKeys('Kameleo', Key.ENTER);
         await webdriver.sleep(15000);
 
         await webdriver.get('https://whoer.net');
@@ -49,7 +48,7 @@ const { Builder, By, Key } = require('selenium-webdriver');
 
         await webdriver.get('https://translate.google.com/');
         await webdriver.sleep(15000);
-        
+
         // Stop the profile
         await client.stopProfile(profile.id);
 
