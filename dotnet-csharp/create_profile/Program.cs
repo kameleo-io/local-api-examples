@@ -16,10 +16,12 @@ namespace CreateProfile
 
             // Create a new profile with recommended settings
             // Choose one of the Chrome BaseProfiles
-            // You can setup here all of the profile options like Webgl
+            // You can setup here all of the profile options like WebGL, password manager and start page
             var createProfileRequest = BuilderForCreateProfile
                 .ForBaseProfile(baseProfileList[0].Id)
                 .SetWebgl("noise", new WebglSpoofingOptions("Google Inc.", "ANGLE (Intel(R) HD Graphics 630 Direct3D11 vs_5_0 ps_5_0)"))
+                .SetPasswordManager("enabled")
+                .SetStartPage("https://kameleo.io")
                 .Build();
 
             var profile = await client.CreateProfileAsync(createProfileRequest);

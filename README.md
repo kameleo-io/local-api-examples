@@ -1,5 +1,5 @@
 # Kameleo Local API Example Codes
-[Kameleo](https://kameleo.io) is a complete and integrated solution for browser fingerprinting protection, and also for easy browser automation using W3C WebDriver. This repository shows useful and easy to understand examples written in Node.js and .NET Core (C#) about web scraping and automated browsing with Kameleo Client.
+[Kameleo](https://kameleo.io) is a complete and integrated solution for browser fingerprinting protection, and also for easy browser automation using W3C WebDriver. This repository shows useful and easy to understand examples written in Node.js, Python and .NET Core (C#) about web scraping and automated browsing with Kameleo Client.
 # Features
 - Protection from Selenium/WebDriver detection
 - Start unlimited number of profiles with different browser fingerprints
@@ -20,15 +20,18 @@
 ```
 > Note: _You need [Automation package](https://kameleo.io/pricing) of Kameleo to access the features described below._
 ## 2. Start the example code that you are interested in
-For projects located in the `nodejs` folder you must run `npm install` and then `npm start`. For project located in the `dotnet-csharp` folder just open the .csproj file using Visual Studio 2019 or later.
-| Folder                          | Description                                                                                                                        |
-|---------------------------------|------------------------------------------------------------------------------------------------------------------------------------|
-| connect_to_selenium             | This code illustrates how to start a browser in Kameleo and then automate actions using Selenium commands.                         |
-| create_profile                  | This is an example for creating a Kameleo profile.                                                                                 |
-| external_browser_with_puppeteer | This example showcases a way to start a browser using Puppeteer and connect it with Kameleo to add browser fingerprint protection. |
-| find_baseprofile                | This quick example shows you different ways to find the perfect base profile for your work.                                        |
-| manage_cookies                  | Kameleo's features to edit, modify or create cookies are easy to use, just a few lines of code needed.                             |
-| profile_save_load               | Quick example of saving and loading profiles to/from .kameleo files on your computer.                                              |
-| start_chrome                    | In this example you can see how you can influence the started browser type using profile attributes.                               |
-| start_with_proxy                | Using any HTTP, SOCKS or SSH proxy is easy with Kameleo, just check out these few lines of code to see yourself.                   |
-| update_profile                  | This code is to illustrate how easy is to modify profile attributes after you have created one.                                    |
+- For projects located in the `nodejs` folder you must run `npm install` and then `npm start`.
+- For projects located in the `python` folder you must run `pip install -r requirements.txt` and then `python app.py`.
+- For project located in the `dotnet-csharp` folder just open the .csproj file using Visual Studio 2019 or later.
+| Folder                          | Description                                                                                                                           |
+|---------------------------------|---------------------------------------------------------------------------------------------------------------------------------------|
+| connect_to_selenium             | This code illustrates how to start a browser in Kameleo and then automate actions using Selenium commands.                            |
+| create_profile                  | This is an example for creating a Kameleo profile.                                                                                    |
+| external_browser_with_puppeteer | This example showcases a way to start a browser using Puppeteer and connect it with Kameleo to add browser fingerprint protection.    |
+| find_baseprofile                | This quick example shows you different ways to find the perfect base profile for your work.                                           |
+| manage_cookies                  | Kameleo's features to edit, modify or create cookies are easy to use, just a few lines of code needed.                                |
+| profile_save_load               | Quick example of saving and loading profiles to/from .kameleo files on your computer.                                                 |
+| start_chrome                    | In this example you can see how you can influence the started browser type using profile attributes.                                  |
+| start_with_proxy                | Using any HTTP, SOCKS or SSH proxy is easy with Kameleo, just check out these few lines of code to see yourself.                      |
+| update_profile                  | This code is to illustrate how easy is to modify profile attributes after you have created one.                                       |
+| start_browser_with_additional_web_driver_settings | For advanced developers we provide an opportunity to add additional WebDriver settings when the browser is started. |

@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "@kameleo/local-api-client": "^2.0.1",
+    "@kameleo/local-api-client": "^2.3.0",
     "puppeteer": "^5.4.1"
   },
   "scripts": {

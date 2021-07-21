@@ -1,0 +1,2 @@
+kameleo.local_api_client
+selenium==4.0.0.b4
