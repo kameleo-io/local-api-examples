@@ -1,0 +1,2 @@
+kameleo.local_api_client
+playwright

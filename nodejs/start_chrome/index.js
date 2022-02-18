@@ -10,7 +10,7 @@ const { KameleoLocalApiClient, BuilderForCreateProfile } = require('@kameleo/loc
         // Search one of the Base Profiles
         const baseProfileList = await client.searchBaseProfiles({
             deviceType: 'desktop',
-            osFamily: 'macos'
+            osFamily: 'macos',
         });
 
         // Create a new profile with recommended settings

@@ -1,19 +1,20 @@
 const { KameleoLocalApiClient, BuilderForCreateProfile } = require('@kameleo/local-api-client');
-const { Builder, By, Key, until} = require('selenium-webdriver');
+const { Builder, By, Key, until } = require('selenium-webdriver');
 
 (async () => {
-    const kameleoBaseUrl = 'http://localhost:5050';
-
     try {
+        // This is the port Kameleo.CLI is listening on. Default value is 5050, but can be overridden in appsettings.json file
+        const kameleoPort = 5050;
+
         const client = new KameleoLocalApiClient({
-            baseUri: kameleoBaseUrl,
+            baseUri: `http://localhost:${kameleoPort}`,
             noRetryPolicy: true,
         });
 
         // Search one of the Base Profiles
         const baseProfileList = await client.searchBaseProfiles({
             deviceType: 'desktop',
-            browserProduct: 'chrome'
+            browserProduct: 'chrome',
         });
 
         // Create a new profile with recommended settings
@@ -29,16 +30,17 @@ const { Builder, By, Key, until} = require('selenium-webdriver');
 
         // Connect to the profile using WebDriver protocol
         const builder = new Builder()
-            .usingServer(`${kameleoBaseUrl}/webdriver`)
+            .usingServer(`http://localhost:${kameleoPort}/webdriver`)
             .withCapabilities({
                 'kameleo:profileId': profile.id,
                 browserName: 'Kameleo',
             });
         const webdriver = await builder.build();
 
-        // Navigate the browser and print the title to the console
+        // Use any WebDriver command to drive the browser
+        // and enjoy full protection from bot detection products
         await webdriver.get('https://google.com');
-        await webdriver.findElement(By.css('div[aria-modal="true"][tabindex="0"] button:not([aria-label]):last-child')).click();
+        await webdriver.findElement(By.css('div[aria-modal="true"][tabindex="0"] button + button')).click();
         await webdriver.findElement(By.name('q')).sendKeys('Kameleo', Key.ENTER);
         await webdriver.wait(until.elementLocated(By.id('main')));
         const title = await webdriver.getTitle();
@@ -47,7 +49,7 @@ const { Builder, By, Key, until} = require('selenium-webdriver');
         // Wait for 5 seconds
         await webdriver.sleep(5000);
 
-        // Stop the profile
+        // Stop the browser by stopping the Kameleo profile
         await client.stopProfile(profile.id);
     } catch (error) {
         console.error(error);

@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@kameleo/local-api-client": "^2.3.0",
+    "@kameleo/local-api-client": "^2.6.0",
     "selenium-webdriver": "^4.0.0-alpha.7"
   },
   "devDependencies": {

@@ -1,27 +1,33 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29806.167
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConnectToSelenium", "connect_to_selenium\ConnectToSelenium.csproj", "{3E86DFCA-EEA3-4085-BB6E-870CD06F0E02}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConnectToSelenium", "connect_to_selenium\ConnectToSelenium.csproj", "{3E86DFCA-EEA3-4085-BB6E-870CD06F0E02}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreateProfile", "create_profile\CreateProfile.csproj", "{77F8588F-798C-4697-A54C-AFEACA882FE2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CreateProfile", "create_profile\CreateProfile.csproj", "{77F8588F-798C-4697-A54C-AFEACA882FE2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtenalBrowserToPuppeteer", "external_browser_to_puppeteer\ExtenalBrowserToPuppeteer.csproj", "{DC8D2567-386E-41E7-81AA-F9C0E1C06F6C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FindBaseProfiles", "find_baseprofile\FindBaseProfiles.csproj", "{AEB7607A-B261-430D-83E0-701384AEF6F8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FindBaseProfiles", "find_baseprofile\FindBaseProfiles.csproj", "{AEB7607A-B261-430D-83E0-701384AEF6F8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ManageCookies", "manage_cookies\ManageCookies.csproj", "{3BBBBFC7-E24F-492F-883D-AE1DED165E22}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManageCookies", "manage_cookies\ManageCookies.csproj", "{3BBBBFC7-E24F-492F-883D-AE1DED165E22}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProfileSaveLoad", "profile_save_load\ProfileSaveLoad.csproj", "{64140277-D6A3-4827-8801-0F4148555AEA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProfileSaveLoad", "profile_save_load\ProfileSaveLoad.csproj", "{64140277-D6A3-4827-8801-0F4148555AEA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StartChrome", "start_chrome\StartChrome.csproj", "{FA83AF2C-3CA0-46EF-97AB-1BE791ED9B66}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StartChrome", "start_chrome\StartChrome.csproj", "{FA83AF2C-3CA0-46EF-97AB-1BE791ED9B66}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StartWithProxy", "start_with_proxy\StartWithProxy.csproj", "{AD3D25A3-9742-4EED-932F-15DE186FC03D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StartWithProxy", "start_with_proxy\StartWithProxy.csproj", "{AD3D25A3-9742-4EED-932F-15DE186FC03D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UpdateProfile", "update_profile\UpdateProfile.csproj", "{71C2DCBA-063F-418D-8AFD-2BB2E44A1900}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpdateProfile", "update_profile\UpdateProfile.csproj", "{71C2DCBA-063F-418D-8AFD-2BB2E44A1900}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StartBrowserWithAdditionalWebDriverSettings", "start_browser_with_additional_web_driver_settings\StartBrowserWithAdditionalWebDriverSettings.csproj", "{3D70BFC4-DB3D-4B51-AD19-4A25A3411930}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StartBrowserWithAdditionalWebDriverSettings", "start_browser_with_additional_web_driver_settings\StartBrowserWithAdditionalWebDriverSettings.csproj", "{3D70BFC4-DB3D-4B51-AD19-4A25A3411930}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConnectWithPuppeteer", "connect_with_puppeteer\ConnectWithPuppeteer.csproj", "{2213577D-4BDA-4D0A-93E8-95423150DAC1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConnectWithPlaywrightToFirefox", "connect_with_playwright_to_firefox\ConnectWithPlaywrightToFirefox.csproj", "{CA9128F3-05B9-4385-87EC-554C09E780F2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConnectWithPlaywrightToChrome", "connect_with_playwright_to_chrome\ConnectWithPlaywrightToChrome.csproj", "{42C3E7B9-50A0-438C-A4C4-718FA24CBB5A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestProxy", "test_proxy\TestProxy.csproj", "{29CFB15E-BFE0-477A-AD65-84A9AC960AE9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,10 +43,6 @@ Global
 		{77F8588F-798C-4697-A54C-AFEACA882FE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77F8588F-798C-4697-A54C-AFEACA882FE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77F8588F-798C-4697-A54C-AFEACA882FE2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DC8D2567-386E-41E7-81AA-F9C0E1C06F6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DC8D2567-386E-41E7-81AA-F9C0E1C06F6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DC8D2567-386E-41E7-81AA-F9C0E1C06F6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DC8D2567-386E-41E7-81AA-F9C0E1C06F6C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AEB7607A-B261-430D-83E0-701384AEF6F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AEB7607A-B261-430D-83E0-701384AEF6F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AEB7607A-B261-430D-83E0-701384AEF6F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -69,6 +71,22 @@ Global
 		{3D70BFC4-DB3D-4B51-AD19-4A25A3411930}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D70BFC4-DB3D-4B51-AD19-4A25A3411930}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D70BFC4-DB3D-4B51-AD19-4A25A3411930}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2213577D-4BDA-4D0A-93E8-95423150DAC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2213577D-4BDA-4D0A-93E8-95423150DAC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2213577D-4BDA-4D0A-93E8-95423150DAC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2213577D-4BDA-4D0A-93E8-95423150DAC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA9128F3-05B9-4385-87EC-554C09E780F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA9128F3-05B9-4385-87EC-554C09E780F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA9128F3-05B9-4385-87EC-554C09E780F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA9128F3-05B9-4385-87EC-554C09E780F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42C3E7B9-50A0-438C-A4C4-718FA24CBB5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42C3E7B9-50A0-438C-A4C4-718FA24CBB5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42C3E7B9-50A0-438C-A4C4-718FA24CBB5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42C3E7B9-50A0-438C-A4C4-718FA24CBB5A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29CFB15E-BFE0-477A-AD65-84A9AC960AE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29CFB15E-BFE0-477A-AD65-84A9AC960AE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29CFB15E-BFE0-477A-AD65-84A9AC960AE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29CFB15E-BFE0-477A-AD65-84A9AC960AE9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
