@@ -1,5 +1,4 @@
-﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
+﻿using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Remote;
 using System;
 using System.Collections.Generic;
@@ -11,10 +10,12 @@ namespace ManageCookies
 {
     class Program
     {
-        private const string BaseUrl = "http://localhost:5050";
+        // This is the port Kameleo.CLI is listening on. Default value is 5050, but can be overridden in appsettings.json file
+        private const int KameleoPort = 5050;
+
         static async Task Main()
         {
-            var client = new KameleoLocalApiClient(new Uri(BaseUrl));
+            var client = new KameleoLocalApiClient(new Uri($"http://localhost:{KameleoPort}"));
             client.SetRetryPolicy(null);
 
             // Search a Base Profiles
@@ -32,7 +33,7 @@ namespace ManageCookies
             await client.StartProfileAsync(profile.Id);
 
             // Connect to the profile using WebDriver protocol
-            var uri = new Uri($"{BaseUrl}/webdriver");
+            var uri = new Uri($"http://localhost:{KameleoPort}/webdriver");
             var opts = new ChromeOptions();
             opts.AddAdditionalOption("kameleo:profileId", profile.Id.ToString());
             var webdriver = new RemoteWebDriver(uri, opts);
@@ -40,19 +41,13 @@ namespace ManageCookies
 
             // Navigate to a site which give you cookies
             webdriver.Navigate().GoToUrl("https://google.com");
-            await Task.Delay(15000);
+            await Task.Delay(5000);
 
             webdriver.Navigate().GoToUrl("https://whoer.net");
-            await Task.Delay(15000);
+            await Task.Delay(5000);
 
             webdriver.Navigate().GoToUrl("https://www.youtube.com");
-            await Task.Delay(15000);
-
-            webdriver.Navigate().GoToUrl("https://translate.google.com/");
-            await Task.Delay(15000);
-
-            webdriver.Navigate().GoToUrl("https://mail.google.com/");
-            await Task.Delay(15000);
+            await Task.Delay(5000);
 
             // Stop the profile
             await client.StopProfileAsync(profile.Id);

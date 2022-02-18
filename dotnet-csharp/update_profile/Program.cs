@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Kameleo.LocalApiClient;
 using Kameleo.LocalApiClient.Models;
 
@@ -6,9 +7,12 @@ namespace UpdateProfile
 {
     class Program
     {
+        // This is the port Kameleo.CLI is listening on. Default value is 5050, but can be overridden in appsettings.json file
+        private const int KameleoPort = 5050;
+
         static async Task Main()
         {
-            var client = new KameleoLocalApiClient();
+            var client = new KameleoLocalApiClient(new Uri($"http://localhost:{KameleoPort}"));
             client.SetRetryPolicy(null);
 
             // Search a Base Profiles
@@ -28,7 +32,8 @@ namespace UpdateProfile
             // Others should be the same
             var updateRequestBody = new UpdateProfileRequest(profile)
             {
-                StartPage = "https://www.google.com", Canvas = "noise"
+                StartPage = "https://www.google.com",
+                Canvas = "noise",
             };
 
             // Send the update request and the response will be your new profile

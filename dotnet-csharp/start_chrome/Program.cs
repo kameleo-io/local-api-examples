@@ -1,13 +1,17 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Kameleo.LocalApiClient;
 
-namespace StartChromium
+namespace StartChrome
 {
     class Program
     {
+        // This is the port Kameleo.CLI is listening on. Default value is 5050, but can be overridden in appsettings.json file
+        private const int KameleoPort = 5050;
+
         static async Task Main()
         {
-            var client = new KameleoLocalApiClient();
+            var client = new KameleoLocalApiClient(new Uri($"http://localhost:{KameleoPort}"));
             client.SetRetryPolicy(null);
 
             // Search Chrome Base Profiles
@@ -16,10 +20,10 @@ namespace StartChromium
             // Create a new profile with recommended settings
             // Choose one of the Chrome BaseProfiles
             // You can setup here all of the profile options
-            // Set the launcher "chromium" for launching chromium
+            // Set the launcher "chrome" for launching official Chrome
             var createProfileRequest = BuilderForCreateProfile
                 .ForBaseProfile(baseProfileList[0].Id)
-                .SetLauncher("chromium")
+                .SetLauncher("chrome")
                 .Build();
 
             var profile = await client.CreateProfileAsync(createProfileRequest);

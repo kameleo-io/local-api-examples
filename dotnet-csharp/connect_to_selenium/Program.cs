@@ -10,11 +10,12 @@ namespace ConnectToSelenium
 {
     class Program
     {
-        private const string KameleoBaseUrl = "http://localhost:5050";
+        // This is the port Kameleo.CLI is listening on. Default value is 5050, but can be overridden in appsettings.json file
+        private const int KameleoPort = 5050;
 
         static async Task Main()
         {
-            var client = new KameleoLocalApiClient(new Uri(KameleoBaseUrl));
+            var client = new KameleoLocalApiClient(new Uri($"http://localhost:{KameleoPort}"));
             client.SetRetryPolicy(null);
 
             // Search Chrome Base Profiles
@@ -33,16 +34,16 @@ namespace ConnectToSelenium
             await client.StartProfileAsync(profile.Id);
 
             // Connect to the running browser instance using WebDriver
-            var uri = new Uri($"{KameleoBaseUrl}/webdriver");
+            var uri = new Uri($"http://localhost:{KameleoPort}/webdriver");
             var opts = new ChromeOptions();
             opts.AddAdditionalOption("kameleo:profileId", profile.Id.ToString());
             var webdriver = new RemoteWebDriver(uri, opts);
 
 
             // Use any WebDriver command to drive the browser
-            // and enjoy full protection from Selenium detection methods
+            // and enjoy full protection from bot detection products
             webdriver.Navigate().GoToUrl("https://google.com");
-            webdriver.FindElement(By.CssSelector("div[aria-modal=\"true\"][tabindex=\"0\"] button:not([aria-label]):last-child")).Click();
+            webdriver.FindElement(By.CssSelector("div[aria-modal=\"true\"][tabindex=\"0\"] button + button")).Click();
             webdriver.FindElement(By.Name("q")).SendKeys("Kameleo");
             webdriver.FindElement(By.Name("q")).SendKeys(Keys.Enter);
             var wait = new WebDriverWait(webdriver, TimeSpan.FromSeconds(10));

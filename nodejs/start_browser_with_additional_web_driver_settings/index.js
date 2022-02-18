@@ -2,8 +2,11 @@ const { KameleoLocalApiClient, BuilderForCreateProfile } = require('@kameleo/loc
 
 (async () => {
     try {
+        // This is the port Kameleo.CLI is listening on. Default value is 5050, but can be overridden in appsettings.json file
+        const kameleoPort = 5050;
+
         const client = new KameleoLocalApiClient({
-            baseUri: 'http://localhost:5050',
+            baseUri: `http://localhost:${kameleoPort}`,
             noRetryPolicy: true,
         });
 
@@ -25,25 +28,25 @@ const { KameleoLocalApiClient, BuilderForCreateProfile } = require('@kameleo/loc
         await client.startProfileWithWebDriverSettings(profile.id, {
             body: {
                 argumentsProperty: [
-                    "mute-audio"
+                    'mute-audio',
                 ],
                 preferences: [
                     {
-                        key: "profile.managed_default_content_settings.images",
-                        value: 2
+                        key: 'profile.managed_default_content_settings.images',
+                        value: 2,
                     },
                     {
-                        key: "profile.password_manager_enabled.images",
-                        value: 2
-                    }
+                        key: 'profile.password_manager_enabled.images',
+                        value: 2,
+                    },
                 ],
                 additionalOptions: [
                     {
-                        key: "pageLoadStrategy",
-                        value: "eager"
-                    }
-                ]
-            }
+                        key: 'pageLoadStrategy',
+                        value: 'eager',
+                    },
+                ],
+            },
         });
 
         // Wait for 10 seconds

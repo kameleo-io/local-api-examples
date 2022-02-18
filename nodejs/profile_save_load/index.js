@@ -2,13 +2,16 @@ const { KameleoLocalApiClient, BuilderForCreateProfile } = require('@kameleo/loc
 
 (async () => {
     try {
+        // This is the port Kameleo.CLI is listening on. Default value is 5050, but can be overridden in appsettings.json file
+        const kameleoPort = 5050;
+
         const client = new KameleoLocalApiClient({
-            baseUri: 'http://localhost:5050',
+            baseUri: `http://localhost:${kameleoPort}`,
             noRetryPolicy: true,
         });
 
         // Search one of the Base Profiles
-        const baseProfileList = await client.searchBaseProfiles({});
+        const baseProfileList = await client.searchBaseProfiles({ deviceType: 'desktop' });
 
         // Create a new profile with recommended settings
         const createProfileRequest = BuilderForCreateProfile
@@ -21,7 +24,7 @@ const { KameleoLocalApiClient, BuilderForCreateProfile } = require('@kameleo/loc
         await client.startProfile(profile.id);
 
         // Wait for 10 seconds
-        await new Promise((r) => setTimeout(r, 10000));
+        await new Promise((r) => setTimeout(r, 5000));
 
         // Stop the profile
         await client.stopProfile(profile.id);

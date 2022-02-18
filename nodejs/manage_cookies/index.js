@@ -2,11 +2,12 @@ const { KameleoLocalApiClient, BuilderForCreateProfile } = require('@kameleo/loc
 const { Builder, By, Key } = require('selenium-webdriver');
 
 (async () => {
-    const kameleoBaseUrl = 'http://localhost:5050';
-
     try {
+        // This is the port Kameleo.CLI is listening on. Default value is 5050, but can be overridden in appsettings.json file
+        const kameleoPort = 5050;
+
         const client = new KameleoLocalApiClient({
-            baseUri: kameleoBaseUrl,
+            baseUri: `http://localhost:${kameleoPort}`,
             noRetryPolicy: true,
         });
 
@@ -29,7 +30,7 @@ const { Builder, By, Key } = require('selenium-webdriver');
 
         // Connect to the profile using WebDriver protocol
         const builder = new Builder()
-            .usingServer(`${kameleoBaseUrl}/webdriver`)
+            .usingServer(`http://localhost:${kameleoPort}/webdriver`)
             .withCapabilities({
                 'kameleo:profileId': profile.id,
                 browserName: 'Kameleo',
@@ -38,16 +39,13 @@ const { Builder, By, Key } = require('selenium-webdriver');
 
         // Navigate to a site which give you cookies
         await webdriver.get('https://google.com');
-        await webdriver.sleep(15000);
+        await webdriver.sleep(5000);
 
         await webdriver.get('https://whoer.net');
-        await webdriver.sleep(15000);
+        await webdriver.sleep(5000);
 
         await webdriver.get('https://www.youtube.com');
-        await webdriver.sleep(15000);
-
-        await webdriver.get('https://translate.google.com/');
-        await webdriver.sleep(15000);
+        await webdriver.sleep(5000);
 
         // Stop the profile
         await client.stopProfile(profile.id);
