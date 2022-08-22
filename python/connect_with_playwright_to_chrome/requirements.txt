@@ -1,2 +1,2 @@
 kameleo.local_api_client
-playwright
+playwright==1.25.0

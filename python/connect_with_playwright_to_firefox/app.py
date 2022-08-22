@@ -32,13 +32,15 @@ try:
     # Connect to the browser with Playwright
     browser_ws_endpoint = f'ws://localhost:{kameleo_port}/playwright/{profile.id}'
     with sync_playwright() as playwright:
-        browser = playwright.firefox.launch(
+        browser = playwright.firefox.launch_persistent_context(
+            '',
             # The Playwright framework is not designed to connect to already running
             # browsers. To overcome this limitation, a tool bundled with Kameleo, named
             # pw-bridge.exe will bridge the communication gap between the running Firefox
             # instance and this playwright script.
             executable_path='<PATH_TO_KAMELEO_FOLDER>\\pw-bridge.exe',
-            args=[f'-target {browser_ws_endpoint}'])
+            args=[f'-target {browser_ws_endpoint}'],
+            viewport=None)
 
         # Kameleo will open the a new page in the default browser context.
         # NOTE: We DO NOT recommend using multiple browser contexts, as this might interfere

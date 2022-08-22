@@ -35,10 +35,6 @@ const { KameleoLocalApiClient, BuilderForCreateProfile } = require('@kameleo/loc
                         key: 'profile.managed_default_content_settings.images',
                         value: 2,
                     },
-                    {
-                        key: 'profile.password_manager_enabled.images',
-                        value: 2,
-                    },
                 ],
                 additionalOptions: [
                     {

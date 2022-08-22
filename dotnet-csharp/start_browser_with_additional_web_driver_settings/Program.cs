@@ -34,7 +34,6 @@ namespace StartBrowserWithAdditionalWebDriverSettings
                 Preferences = new List<Preference>
                 {
                     new Preference("profile.managed_default_content_settings.images", 2),
-                    new Preference("profile.password_manager_enabled.images", 2),
                 },
                 AdditionalOptions = new List<Preference>
                 {
