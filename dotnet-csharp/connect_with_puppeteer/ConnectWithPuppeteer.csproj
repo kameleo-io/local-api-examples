@@ -6,8 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Kameleo.LocalApiClient" Version="2.6.0" />
-    <PackageReference Include="PuppeteerSharp" Version="6.1.0" />
+    <PackageReference Include="Kameleo.LocalApiClient" Version="2.9.0" />
+    <PackageReference Include="PuppeteerSharp" Version="7.1.0" />
   </ItemGroup>
 
 </Project>

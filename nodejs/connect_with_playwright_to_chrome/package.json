@@ -10,8 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@kameleo/local-api-client": "^2.6.0",
-    "playwright": "^1.19.1"
+    "@kameleo/local-api-client": "^2.9.0",
+    "playwright": "^1.25.0"
   },
   "devDependencies": {
     "eslint": "^7.2.0",

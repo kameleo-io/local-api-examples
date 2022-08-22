@@ -34,7 +34,7 @@ namespace ConnectWithPlaywrightToFirefox
             // Connect to the browser with Playwright
             var browserWsEndpoint = $"ws://localhost:{KameleoPort}/playwright/{profile.Id}";
             var playwright = await Playwright.CreateAsync();
-            var browser = await playwright.Firefox.LaunchAsync(new BrowserTypeLaunchOptions
+            var browser = await playwright.Firefox.LaunchPersistentContextAsync("", new BrowserTypeLaunchPersistentContextOptions
             {
                 // The Playwright framework is not designed to connect to already running 
                 // browsers. To overcome this limitation, a tool bundled with Kameleo, named 
@@ -42,6 +42,7 @@ namespace ConnectWithPlaywrightToFirefox
                 // instance and this playwright script.
                 ExecutablePath = "<PATH_TO_KAMELEO_FOLDER>\\pw-bridge.exe",
                 Args = new List<string> { $"-target {browserWsEndpoint}" },
+                ViewportSize = null,
             });
 
             // Kameleo will open the a new page in the default browser context.
