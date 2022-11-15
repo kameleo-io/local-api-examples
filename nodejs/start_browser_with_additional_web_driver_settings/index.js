@@ -36,12 +36,6 @@ const { KameleoLocalApiClient, BuilderForCreateProfile } = require('@kameleo/loc
                         value: 2,
                     },
                 ],
-                additionalOptions: [
-                    {
-                        key: 'pageLoadStrategy',
-                        value: 'eager',
-                    },
-                ],
             },
         });
 

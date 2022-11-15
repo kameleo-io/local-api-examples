@@ -23,6 +23,7 @@ namespace CreateProfile
             // You can setup here all of the profile options like WebGL, password manager and start page
             var createProfileRequest = BuilderForCreateProfile
                 .ForBaseProfile(baseProfileList[0].Id)
+                .SetRecommendedDefaults()
                 .SetWebgl("noise", new WebglSpoofingOptions("Google Inc.", "ANGLE (Intel(R) HD Graphics 630 Direct3D11 vs_5_0 ps_5_0)"))
                 .SetPasswordManager("enabled")
                 .SetStartPage("https://kameleo.io")

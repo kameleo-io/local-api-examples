@@ -19,9 +19,10 @@ namespace ProfileSaveLoad
             // Search a Base Profiles
             var baseProfileList = await client.SearchBaseProfilesAsync();
 
-            // Choose one of from BaseProfiles
+            // Create a new profile with recommended settings
             var createProfileRequest = BuilderForCreateProfile
                 .ForBaseProfile(baseProfileList[0].Id)
+                .SetRecommendedDefaults()
                 .Build();
 
             var profile = await client.CreateProfileAsync(createProfileRequest);

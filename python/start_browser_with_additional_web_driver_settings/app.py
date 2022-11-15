@@ -32,9 +32,6 @@ try:
         arguments=["mute-audio"],
         preferences=[
             Preference(key='profile.managed_default_content_settings.images', value=2),
-        ],
-        additional_options=[
-            Preference(key="pageLoadStrategy", value="eager")
         ]
     ))
 

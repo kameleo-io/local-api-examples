@@ -23,6 +23,7 @@ namespace StartChrome
             // Set the launcher "chrome" for launching official Chrome
             var createProfileRequest = BuilderForCreateProfile
                 .ForBaseProfile(baseProfileList[0].Id)
+                .SetRecommendedDefaults()
                 .SetLauncher("chrome")
                 .Build();
 
