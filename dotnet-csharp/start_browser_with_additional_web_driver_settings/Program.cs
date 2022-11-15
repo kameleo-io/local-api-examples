@@ -23,6 +23,7 @@ namespace StartBrowserWithAdditionalWebDriverSettings
             // Choose one of the Chrome BaseProfiles
             var createProfileRequest = BuilderForCreateProfile
                 .ForBaseProfile(baseProfileList[0].Id)
+                .SetRecommendedDefaults()
                 .Build();
 
             var profile = await client.CreateProfileAsync(createProfileRequest);
@@ -34,10 +35,6 @@ namespace StartBrowserWithAdditionalWebDriverSettings
                 Preferences = new List<Preference>
                 {
                     new Preference("profile.managed_default_content_settings.images", 2),
-                },
-                AdditionalOptions = new List<Preference>
-                {
-                    new Preference("pageLoadStrategy", "eager"),
                 }
             });
 
