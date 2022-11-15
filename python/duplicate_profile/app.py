@@ -1,7 +1,5 @@
 from kameleo.local_api_client.kameleo_local_api_client import KameleoLocalApiClient
 from kameleo.local_api_client.builder_for_create_profile import BuilderForCreateProfile
-from kameleo.local_api_client.models.web_driver_settings_py3 import WebDriverSettings
-from kameleo.local_api_client.models.preference_py3 import Preference
 from kameleo.local_api_client.models.problem_response_py3 import ProblemResponseException
 import time
 import json
@@ -27,18 +25,17 @@ try:
         .build()
     profile = client.create_profile(body=create_profile_request)
 
-    # Provide additional settings for the web driver when starting the browser
-    client.start_profile_with_web_driver_settings(profile.id, WebDriverSettings(
-        arguments=["mute-audio"],
-        preferences=[
-            Preference(key='profile.managed_default_content_settings.images', value=2),
-        ]
-    ))
+    # Start the browser profile
+    client.start_profile(profile.id)
 
-    # Wait for 10 seconds
-    time.sleep(10)
+    # Wait for 5 seconds
+    time.sleep(5)
 
     # Stop the browser by stopping the Kameleo profile
     client.stop_profile(profile.id)
+
+    # The duplicated profile is in the memory only and will be deleted when the Kameleo.CLI is closed unless you save it.
+    duplicatedProfile = client.duplicate_profile(profile.id)
+    print(f'Profile {duplicatedProfile.name} is just created')
 except ProblemResponseException as e:
     raise Exception([str(e), json.dumps(e.error.error)])

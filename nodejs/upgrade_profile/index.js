@@ -12,13 +12,13 @@ const { KameleoLocalApiClient, BuilderForCreateProfile } = require('@kameleo/loc
 
         // Search for a Desktop Base Profile with Windows OS and Chrome browser
         const baseProfileList = await client.searchBaseProfiles({
-            deviceType: "desktop",
-            osFamily: "windows",
-            browserProduct: "chrome"
+            deviceType: 'desktop',
+            osFamily: 'windows',
+            browserProduct: 'chrome'
         });
 
         // Find a Base Profile with the oldest available version of chrome
-        var baseProfile = baseProfileList.sort((a, b) => (a.browser.major > b.browser.major) ? 1 : -1)[0];
+        const baseProfile = baseProfileList.sort((a, b) => ((a.browser.major > b.browser.major) ? 1 : -1))[0];
 
         // Create a new profile with recommended settings
         // Choose one of the BaseProfiles
