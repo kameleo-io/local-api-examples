@@ -18,6 +18,6 @@
   },
   "description": "",
   "dependencies": {
-    "@kameleo/local-api-client": "^2.9.0"
+    "@kameleo/local-api-client": "2.10.0"
   }
 }

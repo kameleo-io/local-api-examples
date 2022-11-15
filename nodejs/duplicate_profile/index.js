@@ -11,39 +11,33 @@ const { KameleoLocalApiClient, BuilderForCreateProfile } = require('@kameleo/loc
         });
 
         // Search Chrome Base Profiles
-        const chromeBaseProfileList = await client.searchBaseProfiles({
+        const baseProfileList = await client.searchBaseProfiles({
             deviceType: 'desktop',
-            browserProduct: 'chrome',
+            browserProduct: 'chrome'
         });
+
 
         // Create a new profile with recommended settings
-        // Choose one of the Chrome BaseProfiles
+        // Choose one of the BaseProfiles
         const createProfileRequest = BuilderForCreateProfile
-            .forBaseProfile(chromeBaseProfileList[0].id)
+            .forBaseProfile(baseProfileList[0].id)
             .setRecommendedDefaults()
             .build();
-        const profile = await client.createProfile({ body: createProfileRequest });
+        let profile = await client.createProfile({ body: createProfileRequest });
 
-        // Provide additional settings for the webdriver when starting the browser
-        await client.startProfileWithWebDriverSettings(profile.id, {
-            body: {
-                argumentsProperty: [
-                    'mute-audio',
-                ],
-                preferences: [
-                    {
-                        key: 'profile.managed_default_content_settings.images',
-                        value: 2,
-                    },
-                ],
-            },
-        });
+
+        // Start the profile
+        await client.startProfile(profile.id);
 
         // Wait for 10 seconds
-        await new Promise((r) => setTimeout(r, 10000));
+        await new Promise((r) => setTimeout(r, 5000));
 
         // Stop the profile
         await client.stopProfile(profile.id);
+
+        // The duplicated profile is in the memory only and will be deleted when the Kameleo.CLI is closed unless you save it.
+        var duplicatedProfile = await client.duplicateProfile(profile.id);
+        console.log(`Profile '${duplicatedProfile.name}' is just created`);
     } catch (error) {
         console.error(error);
     }
