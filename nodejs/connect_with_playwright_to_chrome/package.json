@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@kameleo/local-api-client": "2.10.0",
+    "@kameleo/local-api-client": "2.11.0",
     "playwright": "^1.25.0"
   },
   "devDependencies": {
