@@ -74,7 +74,7 @@ namespace StartMobileWithDesktopLauncher
             Console.WriteLine($"The title is {title}");
 
             // Wait for 5 seconds
-            webdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+            Thread.Sleep(5000);
             
             // Stop the browser by stopping the Kameleo profile
             await client.StopProfileAsync(profile.Id);

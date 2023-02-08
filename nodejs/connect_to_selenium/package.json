@@ -9,10 +9,6 @@
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "@kameleo/local-api-client": "2.10.0",
-    "selenium-webdriver": "^4.6.1"
-  },
   "devDependencies": {
     "eslint": "^7.2.0",
     "eslint-config-airbnb": "^18.2.0",
@@ -20,5 +16,9 @@
     "eslint-plugin-jsx-a11y": "^6.3.0",
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-hooks": "^4.0.0"
+  },
+  "dependencies": {
+    "@kameleo/local-api-client": "2.11.0",
+    "selenium-webdriver": "^4.8.0"
   }
 }

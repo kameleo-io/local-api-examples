@@ -18,7 +18,7 @@
     "eslint-plugin-react-hooks": "^4.0.0"
   },
   "dependencies": {
-    "@kameleo/local-api-client": "2.10.0",
-    "selenium-webdriver": "^4.6.1"
+    "@kameleo/local-api-client": "2.11.0",
+    "selenium-webdriver": "^4.8.0"
   }
 }

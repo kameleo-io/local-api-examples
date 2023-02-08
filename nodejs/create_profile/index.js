@@ -22,8 +22,9 @@ const { KameleoLocalApiClient, BuilderForCreateProfile } = require('@kameleo/loc
         const createProfileRequest = BuilderForCreateProfile
             .forBaseProfile(chromeBaseProfileList[0].id)
             .setRecommendedDefaults()
-            .setWebgl(
-                'noise',
+            .setWebgl('noise')
+            .setWebglMeta(
+                'manual',
                 { vendor: 'Google Inc.', renderer: 'ANGLE (Intel(R) HD Graphics 630 Direct3D11 vs_5_0 ps_5_0)' },
             )
             .setPasswordManager('enabled')

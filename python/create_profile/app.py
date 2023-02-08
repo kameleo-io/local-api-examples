@@ -1,5 +1,6 @@
 from kameleo.local_api_client.kameleo_local_api_client import KameleoLocalApiClient
 from kameleo.local_api_client.builder_for_create_profile import BuilderForCreateProfile
+from kameleo.local_api_client.models import WebglMetaSpoofingOptions
 from kameleo.local_api_client.models.webgl_spoofing_options_py3 import WebglSpoofingOptions
 from kameleo.local_api_client.models.problem_response_py3 import ProblemResponseException
 import time
@@ -24,7 +25,8 @@ try:
     create_profile_request = BuilderForCreateProfile \
         .for_base_profile(base_profiles[0].id) \
         .set_recommended_defaults() \
-        .set_webgl("noise", WebglSpoofingOptions(vendor='Google Inc.', renderer='ANGLE (Intel(R) HD Graphics 630 Direct3D11 vs_5_0 ps_5_0)')) \
+        .set_webgl("noise") \
+        .set_webgl_meta("manual", WebglMetaSpoofingOptions(vendor='Google Inc.', renderer='ANGLE (Intel(R) HD Graphics 630 Direct3D11 vs_5_0 ps_5_0)')) \
         .set_start_page("https://kameleo.io") \
         .set_password_manager("enabled") \
         .build()

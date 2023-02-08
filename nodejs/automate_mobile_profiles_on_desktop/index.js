@@ -1,6 +1,6 @@
 const { KameleoLocalApiClient, BuilderForCreateProfile } = require('@kameleo/local-api-client');
 const {
-    Builder, By, Key, until
+    Builder, By, Key, until,
 } = require('selenium-webdriver');
 
 (async () => {
@@ -68,12 +68,7 @@ const {
         console.log(`The title is ${title}`);
 
         // Wait for 5 seconds
-        await webdriver.sleep(5000);
-
-        // Stop the browser by stopping the Kameleo profile
-        await client.stopProfile(profile.id);
-
-        webdriver.Quit();
+        await new Promise((r) => setTimeout(r, 5000));
 
         // Stop the browser by stopping the Kameleo profile
         await client.stopProfile(profile.id);

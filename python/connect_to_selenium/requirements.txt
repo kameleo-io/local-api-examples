@@ -1,2 +1,2 @@
-kameleo.local_api_client==2.10.0
+kameleo.local_api_client==2.11.0
 selenium
