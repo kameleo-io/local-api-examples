@@ -34,16 +34,19 @@ If you are interested in more information about Kameleo, or have encountered an 
 
 | Folder                                            | Description                                                                                                                                               |
 |---------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| automate_mobile_profiles_on_desktop               | This code shows you how to emulate a mobile device in Chromium by Kameleo. And how to drive it with Selenium or any other automation framework.          |
 | connect_to_selenium                               | This code shows you how to launch a browser in Kameleo, perform actions using [Selenium](https://www.selenium.dev/) commands, and then close the browser. |
 | connect_with_playwright_to_chrome                 | This code shows how to start a Chromium-based browser in Kameleo and automate tasks using the [Playwright](https://playwright.dev/) framework.            |
 | connect_with_playwright_to_firefox                | This code illustrates how to start a Firefox in Kameleo and then automate actions using [Playwright](https://playwright.dev/) framework.                  |
 | connect_with_puppeteer                            | This code illustrates how to start a Chromium based browser in Kameleo and then automate actions using [Puppeteer](https://pptr.dev/) framework.          |
 | create_profile                                    | This is an example for creating a Kameleo profile using the Local API.                                                                                    |
+| duplicate_profile                                 | This code shows you how to duplicate the data stored in a virtual browser profile.                                                                                    |
 | find_baseprofile                                  | This quick example shows you different ways to find the perfect base profile using Kameleo Local API.                                                     |
 | manage_cookies                                    | Kameleo allows you to edit, modify or create cookies with just a few lines of code.                                                                       |
 | profile_save_load                                 | This is a quick example of saving and loading profiles to/from .kameleo files on your computer.                                                           |
+| start_browser_with_additional_web_driver_settings | Check out this example if you want to pass command-line arguments or extra [Selenium](https://www.selenium.dev/) capabilities when starting a browser.    |
 | start_chrome                                      | In this example you can see how you can change the browser started by Kameleo using profile attributes.                                                   |
 | start_with_proxy                                  | Kameleo makes it easy to use any HTTP, SOCKS, or SSH proxy. Check out these few lines of code to see how.                                                 |
 | update_profile                                    | This code is to illustrate how easy is to modify profile attributes after you have created one.                                                           |
-| start_browser_with_additional_web_driver_settings | Check out this example if you want to pass command-line arguments or extra [Selenium](https://www.selenium.dev/) capabilities when starting a browser.    |
-| test_proxy                                  | Kameleo makes it easy to use any HTTP, SOCKS, or SSH proxy. Check out these few lines of code how to check a proxy validity.                                                 |
+| test_proxy                                        | Kameleo makes it easy to use any HTTP, SOCKS, or SSH proxy. Check out these few lines of code how to check a proxy validity.                                                 |
+| upgrade_profile                                   | If you reuse virtual browser profiles and you would like to update the spoofed browser version you should follow this example.                                                 |
