@@ -1,2 +1,2 @@
-kameleo.local_api_client==2.11.0
+kameleo.local_api_client==2.11.1
 playwright==1.25.0
