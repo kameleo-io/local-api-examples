@@ -1,5 +1,5 @@
 const { KameleoLocalApiClient, BuilderForCreateProfile } = require('@kameleo/local-api-client');
-const { Builder, By, Key } = require('selenium-webdriver');
+const { Builder } = require('selenium-webdriver');
 
 (async () => {
     try {
@@ -14,7 +14,7 @@ const { Builder, By, Key } = require('selenium-webdriver');
         // Search one of the Base Profiles
         const baseProfileList = await client.searchBaseProfiles({
             deviceType: 'desktop',
-            browserProduct: 'firefox'
+            browserProduct: 'firefox',
         });
 
         // Create a new profile with recommended settings
@@ -23,7 +23,9 @@ const { Builder, By, Key } = require('selenium-webdriver');
             .forBaseProfile(baseProfileList[0].id)
             .setRecommendedDefaults()
             .build();
-        const profile = await client.createProfile({ body: createProfileRequest });
+        const profile = await client.createProfile({
+            body: createProfileRequest,
+        });
 
         // Start the profile
         await client.startProfile(profile.id);
@@ -58,7 +60,9 @@ const { Builder, By, Key } = require('selenium-webdriver');
         const newCookie = cookieList[0];
         newCookie.value = '123';
         const cookiesArray = new Array(newCookie);
-        await client.addCookies(profile.id, { body: cookiesArray });
+        await client.addCookies(profile.id, {
+            body: cookiesArray,
+        });
 
         // You can delete all cookies of the profile
         await client.deleteCookies(profile.id);

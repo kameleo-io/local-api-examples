@@ -22,10 +22,15 @@ const { KameleoLocalApiClient, BuilderForCreateProfile } = require('@kameleo/loc
             .forBaseProfile(chromeBaseProfileList[0].id)
             .setRecommendedDefaults()
             .build();
-        const profile = await client.createProfile({ body: createProfileRequest });
+        const profile = await client.createProfile({
+            body: createProfileRequest,
+        });
 
         // Provide additional settings for the webdriver when starting the browser
-        await client.startProfileWithWebDriverSettings(profile.id, {
+        // Use this command to customize the browser process by adding command-line arguments
+        //  like '--mute-audio' or '--start-maximized'
+        //  or modify the native profile settings when starting the browser
+        await client.startProfileWithOptions(profile.id, {
             body: {
                 argumentsProperty: [
                     'mute-audio',

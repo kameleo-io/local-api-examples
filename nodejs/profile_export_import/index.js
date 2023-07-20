@@ -11,33 +11,36 @@ const { KameleoLocalApiClient, BuilderForCreateProfile } = require('@kameleo/loc
         });
 
         // Search one of the Base Profiles
-        const baseProfileList = await client.searchBaseProfiles({ deviceType: 'desktop' });
+        const baseProfileList = await client.searchBaseProfiles({
+            deviceType: 'desktop',
+        });
 
         // Create a new profile with recommended settings
         const createProfileRequest = BuilderForCreateProfile
             .forBaseProfile(baseProfileList[0].id)
             .setRecommendedDefaults()
             .build();
-        let profile = await client.createProfile({ body: createProfileRequest });
+        let profile = await client.createProfile({
+            body: createProfileRequest,
+        });
 
-        // Start the profile
-        await client.startProfile(profile.id);
+        // export the profile to a given path
+        const result = await client.exportProfile(profile.id, {
+            body: {
+                path: `${__dirname}\\test.kameleo`,
+            },
+        });
+        console.log('Profile has been exported to', __dirname);
 
-        // Wait for 10 seconds
-        await new Promise((r) => setTimeout(r, 5000));
-
-        // Stop the profile
-        await client.stopProfile(profile.id);
-
-        // save the profile to a given path
-        const result = await client.saveProfile(profile.id, { body: { path: `${__dirname}\\test.kameleo` } });
-        console.log('Profile has been saved to', result.lastKnownPath);
-
-        // You have to delete this profile if you want to load back
+        // You have to delete this profile if you want to import back
         await client.deleteProfile(profile.id);
 
-        // load the profile from the given url
-        profile = await client.loadProfile({ body: { path: `${__dirname}\\test.kameleo` } });
+        // import the profile from the given url
+        profile = await client.importProfile({
+            body: {
+                path: `${__dirname}\\test.kameleo`,
+            },
+        });
 
         // Start the profile
         await client.startProfile(profile.id);

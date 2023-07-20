@@ -3,12 +3,10 @@ const { Builder, By, Key, until } = require('selenium-webdriver');
 
 (async () => {
     try {
-        // This is the port Kameleo.CLI is listening on. Default value is 5050, but can be overridden in appsettings.json file
-        const kameleoPort = 5050;
-
+        // Initialize the Kameleo client
+        const kameleoCliUri = 'http://127.0.0.1:5050';
         const client = new KameleoLocalApiClient({
-            baseUri: `http://localhost:${kameleoPort}`,
-            noRetryPolicy: true,
+            baseUri: kameleoCliUri,
         });
 
         // Search one of the Base Profiles
@@ -23,14 +21,16 @@ const { Builder, By, Key, until } = require('selenium-webdriver');
             .forBaseProfile(baseProfileList[0].id)
             .setRecommendedDefaults()
             .build();
-        const profile = await client.createProfile({ body: createProfileRequest });
+        const profile = await client.createProfile({
+            body: createProfileRequest,
+        });
 
         // Start the profile
         await client.startProfile(profile.id);
 
         // Connect to the profile using WebDriver protocol
         const builder = new Builder()
-            .usingServer(`http://localhost:${kameleoPort}/webdriver`)
+            .usingServer(`${kameleoCliUri}/webdriver`)
             .withCapabilities({
                 'kameleo:profileId': profile.id,
                 browserName: 'Kameleo',

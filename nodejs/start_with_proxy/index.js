@@ -32,7 +32,9 @@ const { KameleoLocalApiClient, BuilderForCreateProfile } = require('@kameleo/loc
                 },
             )
             .build();
-        const profile = await client.createProfile({ body: createProfileRequest });
+        const profile = await client.createProfile({
+            body: createProfileRequest,
+        });
 
         // Start the profile
         await client.startProfile(profile.id);
