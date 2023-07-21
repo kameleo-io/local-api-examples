@@ -14,7 +14,7 @@ const { KameleoLocalApiClient, BuilderForCreateProfile } = require('@kameleo/loc
         const baseProfileList = await client.searchBaseProfiles({
             deviceType: 'desktop',
             osFamily: 'windows',
-            browserProduct: 'chrome'
+            browserProduct: 'chrome',
         });
 
         // Find a Base Profile with the oldest available version of chrome
@@ -26,12 +26,16 @@ const { KameleoLocalApiClient, BuilderForCreateProfile } = require('@kameleo/loc
             .forBaseProfile(baseProfile.id)
             .setRecommendedDefaults()
             .build();
-        let profile = await client.createProfile({ body: createProfileRequest });
-        
+        let profile = await client.createProfile({
+            body: createProfileRequest,
+        });
+
         console.log(`Profile's browser before update is: ${profile.baseProfile.browser.product} ${profile.baseProfile.browser.version}`);
 
         // The Base Profile’s browser version will be updated if there is any available on our servers
-        profile = await client.upgradeProfile(profile.id, { body: profile });
+        profile = await client.upgradeProfile(profile.id, {
+            body: profile,
+        });
         console.log(`Profile's browser after update is: ${profile.baseProfile.browser.product} ${profile.baseProfile.browser.version}`);
 
         // Start the profile

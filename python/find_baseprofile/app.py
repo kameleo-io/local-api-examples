@@ -15,7 +15,7 @@ client = KameleoLocalApiClient(
 # Possible deviceType value: desktop, mobile
 # Possible browserProduct value: chrome, firefox, edge
 # Possible osFamily values: windows, macos, linux, android, ios
-# Possible language values e.g: en-en, es,es
+# Possible language values e.g: en-en, es-es
 # You can use empty parameters as well
 base_profiles = client.search_base_profiles(
     device_type='desktop',

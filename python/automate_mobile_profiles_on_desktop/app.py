@@ -35,7 +35,7 @@ create_profile_request = BuilderForCreateProfile \
 profile = client.create_profile(body=create_profile_request)
 
 # Start the profile
-client.start_profile_with_web_driver_settings(profile.id, body={
+client.start_profile_with_options(profile.id, body={
     # This allows you to click on elements using the cursor when emulating a touch screen in the browser.
     # If you leave this out, your script may time out after clicks and fail.
     'additionalOptions': [
@@ -48,12 +48,11 @@ client.start_profile_with_web_driver_settings(profile.id, body={
 
 # In this example we show how you can automate the mobile profile with Selenium
 # You can also do this with Puppeteer or Playwright
+options = webdriver.ChromeOptions()
+options.add_experimental_option('kameleo:profileId', profile.id)
 driver = webdriver.Remote(
     command_executor=f'http://localhost:{kameleo_port}/webdriver',
-    desired_capabilities={
-        'kameleo:profileId': profile.id,
-        'browserName': 'Kameleo',
-    }
+    options=options
 )
 
 # Use any WebDriver command to drive the browser

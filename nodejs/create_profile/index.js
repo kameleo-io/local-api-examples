@@ -25,12 +25,16 @@ const { KameleoLocalApiClient, BuilderForCreateProfile } = require('@kameleo/loc
             .setWebgl('noise')
             .setWebglMeta(
                 'manual',
-                { vendor: 'Google Inc.', renderer: 'ANGLE (Intel(R) HD Graphics 630 Direct3D11 vs_5_0 ps_5_0)' },
+                {
+                    vendor: 'Google Inc.', renderer: 'ANGLE (Intel(R) HD Graphics 630 Direct3D11 vs_5_0 ps_5_0)',
+                },
             )
             .setPasswordManager('enabled')
             .setStartPage('https://kameleo.io')
             .build();
-        const profile = await client.createProfile({ body: createProfileRequest });
+        const profile = await client.createProfile({
+            body: createProfileRequest,
+        });
 
         // Start the profile
         await client.startProfile(profile.id);

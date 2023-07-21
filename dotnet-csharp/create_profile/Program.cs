@@ -31,7 +31,7 @@ namespace CreateProfile
                 .Build();
 
             var profile = await client.CreateProfileAsync(createProfileRequest);
-            
+
             // Start the profile
             await client.StartProfileAsync(profile.Id);
 

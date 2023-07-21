@@ -15,7 +15,7 @@ const playwright = require('playwright');
         const baseProfiles = await client.searchBaseProfiles({
             deviceType: 'desktop',
             browserProduct: 'firefox',
-            language: 'en',
+            language: 'en-*',
         });
 
         // Create a new profile with recommended settings
@@ -25,17 +25,22 @@ const playwright = require('playwright');
             .setRecommendedDefaults()
             .build();
 
-        const profile = await client.createProfile({ body: requestBody });
+        const profile = await client.createProfile({
+            body: requestBody,
+        });
         await client.startProfile(profile.id);
 
         // Connect to the browser with Playwright
         const browserWSEndpoint = `ws://localhost:${kameleoPort}/playwright/${profile.id}`;
+        // The exact path to the bridge executable is subject to change. Here, we use %LOCALAPPDATA%\Programs\Kameleo\pw-bridge.exe
+        const localAppDataPath = process.env.LOCALAPPDATA;
+        const executablePathExample = `${localAppDataPath}\\Programs\\Kameleo\\pw-bridge.exe`;
         const browser = await playwright.firefox.launchPersistentContext('', {
             // The Playwright framework is not designed to connect to already running
             // browsers. To overcome this limitation, a tool bundled with Kameleo, named
             // pw-bridge.exe will bridge the communication gap between the running Firefox
             // instance and this playwright script.
-            executablePath: '<PATH_TO_KAMELEO_FOLDER>\\pw-bridge.exe',
+            executablePath: executablePathExample,
             args: [`-target ${browserWSEndpoint}`],
             persistent: true,
             viewport: null,

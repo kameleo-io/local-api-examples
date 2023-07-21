@@ -1,9 +1,9 @@
-﻿using Kameleo.LocalApiClient;
-using PuppeteerSharp;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using Kameleo.LocalApiClient;
+using PuppeteerSharp;
 
-namespace ConnectToSelenium
+namespace ConnectWithPuppeteer
 {
     class Program
     {

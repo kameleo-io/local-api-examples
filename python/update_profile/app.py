@@ -26,7 +26,7 @@ create_profile_request = BuilderForCreateProfile \
     .build()
 profile = client.create_profile(body=create_profile_request)
 
-# Change every properties what you want to update
+# Change every property that you want to update
 profile.start_page = 'https://kameleo.io'
 profile.canvas = 'off'
 

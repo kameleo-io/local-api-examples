@@ -1,0 +1,23 @@
+{
+  "name": "profile_export_import",
+  "version": "1.0.0",
+  "description": "This example demonstrates how to export and import a Kameleo profile using Kameleo's Local API client.",
+  "main": "index.js",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "lint": "eslint --fix --config ../.eslintrc.js ."
+  },
+  "author": "Kameleo Team",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^8.42.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.27.5"
+  },
+  "dependencies": {
+    "@kameleo/local-api-client": "^3.0.0"
+  }
+}

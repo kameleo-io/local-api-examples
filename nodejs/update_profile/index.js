@@ -19,14 +19,18 @@ const { KameleoLocalApiClient, BuilderForCreateProfile } = require('@kameleo/loc
             .forBaseProfile(baseProfileList[0].id)
             .setRecommendedDefaults()
             .build();
-        let profile = await client.createProfile({ body: createProfileRequest });
+        let profile = await client.createProfile({
+            body: createProfileRequest,
+        });
 
-        // Change every properties what you want to update
+        // Change every property that you want to update
         profile.startPage = 'https://www.google.com';
         profile.canvas = 'off';
 
         // Send the update request and the response will be your new profile
-        profile = await client.updateProfile(profile.id, { body: profile });
+        profile = await client.updateProfile(profile.id, {
+            body: profile,
+        });
 
         // Start the profile
         await client.startProfile(profile.id);

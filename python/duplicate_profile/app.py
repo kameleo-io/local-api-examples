@@ -25,15 +25,6 @@ create_profile_request = BuilderForCreateProfile \
     .build()
 profile = client.create_profile(body=create_profile_request)
 
-# Start the browser profile
-client.start_profile(profile.id)
-
-# Wait for 5 seconds
-time.sleep(5)
-
-# Stop the browser by stopping the Kameleo profile
-client.stop_profile(profile.id)
-
-# The duplicated profile is in the memory only and will be deleted when the Kameleo.CLI is closed unless you save it.
+# The duplicated profile is in the memory only and will be deleted when the Kameleo.CLI is closed unless you export it.
 duplicatedProfile = client.duplicate_profile(profile.id)
 print(f'Profile {duplicatedProfile.name} is just created')

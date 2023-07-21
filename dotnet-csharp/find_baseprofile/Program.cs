@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Kameleo.LocalApiClient;
 
-namespace FindBaseProfile
+namespace FindBaseProfiles
 {
     class Program
     {

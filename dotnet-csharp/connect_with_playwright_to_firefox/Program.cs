@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using Kameleo.LocalApiClient;
 using Microsoft.Playwright;
@@ -33,20 +34,25 @@ namespace ConnectWithPlaywrightToFirefox
 
             // Connect to the browser with Playwright
             var browserWsEndpoint = $"ws://localhost:{KameleoPort}/playwright/{profile.Id}";
+
+            // The Playwright framework is not designed to connect to already running
+            // browsers. To overcome this limitation, a tool bundled with Kameleo, named
+            // pw-bridge.exe will bridge the communication gap between the running Firefox
+            // instance and this playwright script.
+            // The exact path to the bridge executable is subject to change. Here, we use %LOCALAPPDATA%\Programs\Kameleo\pw-bridge.exe
+            var localAppDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            var executablePath = Path.Combine(localAppDataFolder, "Programs", "Kameleo", "pw-bridge.exe");
+
             var playwright = await Playwright.CreateAsync();
             var browser = await playwright.Firefox.LaunchPersistentContextAsync("", new BrowserTypeLaunchPersistentContextOptions
             {
-                // The Playwright framework is not designed to connect to already running 
-                // browsers. To overcome this limitation, a tool bundled with Kameleo, named 
-                // pw-bridge.exe will bridge the communication gap between the running Firefox 
-                // instance and this playwright script.
-                ExecutablePath = "<PATH_TO_KAMELEO_FOLDER>\\pw-bridge.exe",
+                ExecutablePath = executablePath,
                 Args = new List<string> { $"-target {browserWsEndpoint}" },
                 ViewportSize = null,
             });
 
             // Kameleo will open the a new page in the default browser context.
-            // NOTE: We DO NOT recommend using multiple browser contexts, as this might interfere 
+            // NOTE: We DO NOT recommend using multiple browser contexts, as this might interfere
             //       with Kameleo's browser fingerprint modification features.
             var page = await browser.NewPageAsync();
 

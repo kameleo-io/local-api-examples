@@ -25,7 +25,9 @@ const playwright = require('playwright');
             .setRecommendedDefaults()
             .build();
 
-        const profile = await client.createProfile({ body: requestBody });
+        const profile = await client.createProfile({
+            body: requestBody,
+        });
         await client.startProfile(profile.id);
 
         // Connect to the browser with Playwright through CDP

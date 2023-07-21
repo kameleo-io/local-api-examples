@@ -24,11 +24,11 @@ base_profiles = client.search_base_profiles(
 create_profile_request = BuilderForCreateProfile \
     .for_base_profile(base_profiles[0].id) \
     .set_recommended_defaults() \
-    .set_webgl("noise") \
-    .set_webgl_meta("manual", WebglMetaSpoofingOptions(vendor='Google Inc.',
+    .set_webgl('noise') \
+    .set_webgl_meta('manual', WebglMetaSpoofingOptions(vendor='Google Inc.',
                                                        renderer='ANGLE (Intel(R) HD Graphics 630 Direct3D11 vs_5_0 ps_5_0)')) \
-    .set_start_page("https://kameleo.io") \
-    .set_password_manager("enabled") \
+    .set_start_page('https://kameleo.io') \
+    .set_password_manager('enabled') \
     .build()
 profile = client.create_profile(body=create_profile_request)
 

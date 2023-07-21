@@ -28,7 +28,7 @@ namespace UpdateProfile
 
             var profile = await client.CreateProfileAsync(createProfileRequest);
 
-            // Change every properties what you want to update
+            // Change every property that you want to update
             // Others should be the same
             var updateRequestBody = new UpdateProfileRequest(profile)
             {

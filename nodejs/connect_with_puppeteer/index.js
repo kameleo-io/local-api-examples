@@ -1,5 +1,5 @@
-const { KameleoLocalApiClient, BuilderForCreateProfile } = require("@kameleo/local-api-client");
-const puppeteer = require("puppeteer");    
+const { KameleoLocalApiClient, BuilderForCreateProfile } = require('@kameleo/local-api-client');
+const puppeteer = require('puppeteer');
 
 (async () => {
     try {
@@ -16,7 +16,7 @@ const puppeteer = require("puppeteer");
         const baseProfiles = await client.searchBaseProfiles({
             deviceType: 'desktop',
             browserProduct: 'chrome',
-            language: 'en'
+            language: 'en',
         });
 
         // Create a new profile with recommended settings
@@ -26,14 +26,17 @@ const puppeteer = require("puppeteer");
             .setRecommendedDefaults()
             .build();
 
-        let profile = await client.createProfile({ body: requestBody });
+        const profile = await client.createProfile({
+            body: requestBody,
+        });
         await client.startProfile(profile.id);
 
         // Connect to the browser through CDP
         const browserWSEndpoint = `ws://localhost:${kameleoPort}/puppeteer/${profile.id}`;
-        const browser = await puppeteer.connect({browserWSEndpoint, defaultViewport: null});
+        const browser = await puppeteer.connect({
+            browserWSEndpoint, defaultViewport: null,
+        });
         const page = await browser.newPage();
-
 
         // Use any Puppeteer command to drive the browser
         // and enjoy full protection from bot detection products
