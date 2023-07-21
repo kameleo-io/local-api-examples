@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Kameleo.LocalApiClient;
 using Kameleo.LocalApiClient.Models;
 
-namespace ProfileSaveLoad
+namespace ProfileExportLoad
 {
     class Program
     {
@@ -27,24 +27,16 @@ namespace ProfileSaveLoad
 
             var profile = await client.CreateProfileAsync(createProfileRequest);
 
-            // Start the profile
-            await client.StartProfileAsync(profile.Id);
+            // export the profile to a given path
+            var exportPath = Path.Combine(Environment.CurrentDirectory, "test.kameleo");
+            var result = await client.ExportProfileAsync(profile.Id, new ExportProfileRequest(exportPath));
+            Console.WriteLine("Profile has been exported to " + exportPath);
 
-            // Wait for 10 seconds
-            await Task.Delay(10000);
-
-            // Stop the profile
-            await client.StopProfileAsync(profile.Id);
-
-            // save the profile to a given path
-            var result = await client.SaveProfileAsync(profile.Id, new SaveProfileRequest(Path.Combine(Environment.CurrentDirectory,"test.kameleo")));
-            Console.WriteLine("Profile has been saved to " + result.LastKnownPath);
-
-            // You have to delete this profile if you want to load back
+            // You have to delete this profile if you want to import back
             await client.DeleteProfileAsync(profile.Id);
 
-            // load the profile from the given url
-            profile = await client.LoadProfileAsync(new LoadProfileRequest(Path.Combine(Environment.CurrentDirectory, "test.kameleo")));
+            // import the profile from the given url
+            profile = await client.ImportProfileAsync(new ImportProfileRequest(Path.Combine(Environment.CurrentDirectory, "test.kameleo")));
 
             // Start the profile
             await client.StartProfileAsync(profile.Id);

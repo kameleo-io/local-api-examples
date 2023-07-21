@@ -11,15 +11,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FindBaseProfiles", "find_ba
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ManageCookies", "manage_cookies\ManageCookies.csproj", "{3BBBBFC7-E24F-492F-883D-AE1DED165E22}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProfileSaveLoad", "profile_save_load\ProfileSaveLoad.csproj", "{64140277-D6A3-4827-8801-0F4148555AEA}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StartChrome", "start_chrome\StartChrome.csproj", "{FA83AF2C-3CA0-46EF-97AB-1BE791ED9B66}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProfileExportImport", "profile_export_import\ProfileExportImport.csproj", "{64140277-D6A3-4827-8801-0F4148555AEA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StartWithProxy", "start_with_proxy\StartWithProxy.csproj", "{AD3D25A3-9742-4EED-932F-15DE186FC03D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UpdateProfile", "update_profile\UpdateProfile.csproj", "{71C2DCBA-063F-418D-8AFD-2BB2E44A1900}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StartBrowserWithAdditionalWebDriverSettings", "start_browser_with_additional_web_driver_settings\StartBrowserWithAdditionalWebDriverSettings.csproj", "{3D70BFC4-DB3D-4B51-AD19-4A25A3411930}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StartBrowserWithAdditionalOptions", "start_browser_with_additional_options\StartBrowserWithAdditionalOptions.csproj", "{3D70BFC4-DB3D-4B51-AD19-4A25A3411930}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConnectWithPuppeteer", "connect_with_puppeteer\ConnectWithPuppeteer.csproj", "{2213577D-4BDA-4D0A-93E8-95423150DAC1}"
 EndProject
@@ -27,13 +25,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConnectWithPlaywrightToFire
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConnectWithPlaywrightToChrome", "connect_with_playwright_to_chrome\ConnectWithPlaywrightToChrome.csproj", "{42C3E7B9-50A0-438C-A4C4-718FA24CBB5A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestProxy", "test_proxy\TestProxy.csproj", "{29CFB15E-BFE0-477A-AD65-84A9AC960AE9}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UpgradeProfile", "upgrade_profile\UpgradeProfile.csproj", "{268A15DD-A1FA-4AD8-BC35-BBADB9C7E735}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DuplicateProfile", "duplicate_profile\DuplicateProfile.csproj", "{9D7596DE-0AC4-45A0-8775-B561916D2A22}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutomateMobileProfilesOnDesktop", "automate_mobile_profiles_on_desktop\AutomateMobileProfilesOnDesktop.csproj", "{7FDE0C07-9E77-466B-91C4-81B2FEC05806}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanWorkspace", "clean_workspace\CleanWorkspace.csproj", "{CDAD9604-44AE-43FD-A91F-2E063787CF33}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,10 +59,6 @@ Global
 		{64140277-D6A3-4827-8801-0F4148555AEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{64140277-D6A3-4827-8801-0F4148555AEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{64140277-D6A3-4827-8801-0F4148555AEA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FA83AF2C-3CA0-46EF-97AB-1BE791ED9B66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FA83AF2C-3CA0-46EF-97AB-1BE791ED9B66}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FA83AF2C-3CA0-46EF-97AB-1BE791ED9B66}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FA83AF2C-3CA0-46EF-97AB-1BE791ED9B66}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AD3D25A3-9742-4EED-932F-15DE186FC03D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AD3D25A3-9742-4EED-932F-15DE186FC03D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AD3D25A3-9742-4EED-932F-15DE186FC03D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -89,10 +83,6 @@ Global
 		{42C3E7B9-50A0-438C-A4C4-718FA24CBB5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42C3E7B9-50A0-438C-A4C4-718FA24CBB5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42C3E7B9-50A0-438C-A4C4-718FA24CBB5A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{29CFB15E-BFE0-477A-AD65-84A9AC960AE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{29CFB15E-BFE0-477A-AD65-84A9AC960AE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{29CFB15E-BFE0-477A-AD65-84A9AC960AE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{29CFB15E-BFE0-477A-AD65-84A9AC960AE9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{268A15DD-A1FA-4AD8-BC35-BBADB9C7E735}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{268A15DD-A1FA-4AD8-BC35-BBADB9C7E735}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{268A15DD-A1FA-4AD8-BC35-BBADB9C7E735}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -105,6 +95,10 @@ Global
 		{7FDE0C07-9E77-466B-91C4-81B2FEC05806}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7FDE0C07-9E77-466B-91C4-81B2FEC05806}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7FDE0C07-9E77-466B-91C4-81B2FEC05806}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CDAD9604-44AE-43FD-A91F-2E063787CF33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDAD9604-44AE-43FD-A91F-2E063787CF33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDAD9604-44AE-43FD-A91F-2E063787CF33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDAD9604-44AE-43FD-A91F-2E063787CF33}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

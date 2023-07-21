@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Kameleo.LocalApiClient;
-using Kameleo.LocalApiClient.Models;
 
 namespace UpgradeProfile
 {
@@ -31,7 +29,7 @@ namespace UpgradeProfile
                 .Build();
 
             var profile = await client.CreateProfileAsync(createProfileRequest);
-            
+
             Console.WriteLine($"Profile's browser before update is: {profile.BaseProfile.Browser.Product} {profile.BaseProfile.Browser.Version}");
 
             // The Base Profile’s browser version will be updated if there is any available on our servers

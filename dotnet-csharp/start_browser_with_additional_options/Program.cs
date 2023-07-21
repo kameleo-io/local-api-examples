@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Kameleo.LocalApiClient;
+using Kameleo.LocalApiClient.Models;
 
-namespace StartChrome
+namespace StartBrowserWithAdditionalOptions
 {
     class Program
     {
@@ -15,22 +17,29 @@ namespace StartChrome
             client.SetRetryPolicy(null);
 
             // Search Chrome Base Profiles
-            var baseProfileList = await client.SearchBaseProfilesAsync("desktop", null, "chrome", null);
+            var baseProfileList = await client.SearchBaseProfilesAsync(deviceType: "desktop", browserProduct: "chrome");
 
             // Create a new profile with recommended settings
             // Choose one of the Chrome BaseProfiles
-            // You can setup here all of the profile options
-            // Set the launcher "chrome" for launching official Chrome
             var createProfileRequest = BuilderForCreateProfile
                 .ForBaseProfile(baseProfileList[0].Id)
                 .SetRecommendedDefaults()
-                .SetLauncher("chrome")
                 .Build();
 
             var profile = await client.CreateProfileAsync(createProfileRequest);
 
-            // Start the profile
-            await client.StartProfileAsync(profile.Id);
+            // Provide additional settings for the webdriver when starting the browser
+            // Use this command to customize the browser process by adding command-line arguments
+            //  like '--mute-audio' or '--start-maximized'
+            //  or modify the native profile settings when starting the browser
+            await client.StartProfileWithOptionsAsync(profile.Id, new WebDriverSettings
+            {
+                Arguments = new List<string> { "mute-audio" },
+                Preferences = new List<Preference>
+                {
+                    new Preference("profile.managed_default_content_settings.images", 2),
+                }
+            });
 
             // Wait for 10 seconds
             await Task.Delay(10000);

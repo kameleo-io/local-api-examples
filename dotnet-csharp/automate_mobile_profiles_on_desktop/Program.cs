@@ -6,10 +6,9 @@ using Kameleo.LocalApiClient;
 using Kameleo.LocalApiClient.Models;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Remote;
 
-namespace StartMobileWithDesktopLauncher
+namespace AutomateMobileProfilesOnDesktop
 {
     class Program
     {
@@ -20,14 +19,14 @@ namespace StartMobileWithDesktopLauncher
         {
 
             var client = new KameleoLocalApiClient(new Uri($"http://localhost:{KameleoPort}"));
-            
+
             // Search for a mobile Base Profiles
             var baseProfileList = await client.SearchBaseProfilesAsync(
             "mobile",
             "ios",
             "safari",
             "en-us");
-            
+
 
             // Create a new profile with recommended settings
             // Choose one of the Base Profiles
@@ -37,12 +36,11 @@ namespace StartMobileWithDesktopLauncher
                 .SetRecommendedDefaults()
                 .SetLauncher("chromium")
                 .Build();
-            
-            
+
             var profile = await client.CreateProfileAsync(createProfileRequest);
 
             // Start the profile
-            await client.StartProfileWithWebDriverSettingsAsync(profile.Id, new WebDriverSettings()
+            await client.StartProfileWithOptionsAsync(profile.Id, new WebDriverSettings()
             {
                 AdditionalOptions = new List<Preference>
                 {
@@ -52,8 +50,8 @@ namespace StartMobileWithDesktopLauncher
                 }
             });
 
-            
-            
+
+
             // Connect to the running browser instance using WebDriver
             var uri = new Uri($"http://localhost:{KameleoPort}/webdriver");
             var opts = new ChromeOptions();
@@ -75,7 +73,7 @@ namespace StartMobileWithDesktopLauncher
 
             // Wait for 5 seconds
             Thread.Sleep(5000);
-            
+
             // Stop the browser by stopping the Kameleo profile
             await client.StopProfileAsync(profile.Id);
         }

@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Kameleo.LocalApiClient;
-using Kameleo.LocalApiClient.Models;
 
-namespace TestProxy
+namespace CleanWorkspace
 {
     class Program
     {
@@ -15,9 +14,14 @@ namespace TestProxy
             var client = new KameleoLocalApiClient(new Uri($"http://localhost:{KameleoPort}"));
             client.SetRetryPolicy(null);
 
-            var result = await client.TestProxyAsync(new TestProxyRequest("http", new Server("<host>", 1080, "<userId>", "<userSecret>")));
+            var profiles = await client.ListProfilesAsync();
 
-            Console.WriteLine("Test proxy result: isValid=" + result.IsValidProxy + ", message=" + result.Message);
+            foreach (var profile in profiles)
+            {
+                await client.DeleteProfileAsync(profile.Id);
+            }
+
+            Console.WriteLine($"{profiles.Count} profiles deleted.");
         }
     }
 }
