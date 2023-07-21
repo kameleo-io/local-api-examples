@@ -3,7 +3,7 @@ from kameleo.local_api_client.builder_for_create_profile import BuilderForCreate
 import time
 import os
 
-from kameleo.local_api_client.models import SaveProfileRequest, LoadProfileRequest
+from kameleo.local_api_client.models import ExportProfileRequest, ImportProfileRequest
 
 
 # This is the port Kameleo.CLI is listening on. Default value is 5050, but can be overridden in appsettings.json file
@@ -28,25 +28,17 @@ create_profile_request = BuilderForCreateProfile \
     .build()
 profile = client.create_profile(body=create_profile_request)
 
-# Start the browser profile
-client.start_profile(profile.id)
+# Export the profile to a given path
+folder = os.path.dirname(os.path.realpath(__file__))
+path = f'{folder}\\test.kameleo'
+result = client.export_profile(profile.id, body=ExportProfileRequest(path=path))
+print(f'Profile has been exported to {folder}')
 
-# Wait for 5 seconds
-time.sleep(5)
-
-# Stop the browser by stopping the Kameleo profile
-client.stop_profile(profile.id)
-
-# Save the profile to a given path
-path = f'{os.path.dirname(os.path.realpath(__file__))}\\test.kameleo'
-result = client.save_profile(profile.id, body=SaveProfileRequest(path=path))
-print(f'Profile has been saved to {result.last_known_path}')
-
-# You have to delete this profile if you want to load back
+# You have to delete this profile if you want to import back
 client.delete_profile(profile.id);
 
-# Load the profile from the given url
-profile = client.load_profile(body=LoadProfileRequest(path=path))
+# Import the profile from the given url
+profile = client.import_profile(body=ImportProfileRequest(path=path))
 
 # Start the profile
 client.start_profile(profile.id)

@@ -28,8 +28,11 @@ create_profile_request = BuilderForCreateProfile \
 profile = client.create_profile(body=create_profile_request)
 
 # Provide additional settings for the web driver when starting the browser
-client.start_profile_with_web_driver_settings(profile.id, WebDriverSettings(
-    arguments=["mute-audio"],
+# Use this command to customize the browser process by adding command-line arguments
+#  like '--mute-audio' or '--start-maximized'
+#  or modify the native profile settings when starting the browser
+client.start_profile_with_options(profile.id, WebDriverSettings(
+    arguments=['mute-audio'],
     preferences=[
         Preference(key='profile.managed_default_content_settings.images', value=2),
     ]

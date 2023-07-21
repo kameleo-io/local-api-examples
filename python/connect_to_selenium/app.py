@@ -31,7 +31,7 @@ client.start_profile(profile.id)
 
 # Connect to the running browser instance using WebDriver
 options = webdriver.ChromeOptions()
-options.add_experimental_option("kameleo:profileId", profile.id)
+options.add_experimental_option('kameleo:profileId', profile.id)
 driver = webdriver.Remote(
     command_executor=f'http://localhost:{kameleo_port}/webdriver',
     options=options
