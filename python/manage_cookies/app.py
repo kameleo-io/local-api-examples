@@ -13,7 +13,7 @@ client = KameleoLocalApiClient(
     retry_total=0
 )
 
-# Search Chrome Base Profiles
+# Search Firefox Base Profiles
 base_profiles = client.search_base_profiles(
     device_type='desktop',
     browser_product='firefox'
