@@ -11,7 +11,9 @@ const { KameleoLocalApiClient, BuilderForCreateProfile } = require('@kameleo/loc
         });
 
         // Search all of the Base Profiles
-        const baseProfileList = await client.searchBaseProfiles();
+        const baseProfileList = await client.searchBaseProfiles({
+            deviceType: 'desktop',
+        });
 
         // Create a new profile with recommended settings
         // Choose one of the BaseProfiles
@@ -36,7 +38,7 @@ const { KameleoLocalApiClient, BuilderForCreateProfile } = require('@kameleo/loc
         await client.startProfile(profile.id);
 
         // Wait for 10 seconds
-        await new Promise((r) => setTimeout(r, 10000));
+        await new Promise((r) => setTimeout(r, 10_000));
 
         // Stop the profile
         await client.stopProfile(profile.id);

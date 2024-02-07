@@ -13,6 +13,7 @@ const { KameleoLocalApiClient, BuilderForCreateProfile } = require('@kameleo/loc
         // Search Chrome Base Profiles
         const chromeBaseProfileList = await client.searchBaseProfiles({
             deviceType: 'desktop',
+            browserProduct: 'chrome',
             language: 'es-es',
         });
 
@@ -40,7 +41,7 @@ const { KameleoLocalApiClient, BuilderForCreateProfile } = require('@kameleo/loc
         await client.startProfile(profile.id);
 
         // Wait for 10 seconds
-        await new Promise((r) => setTimeout(r, 10000));
+        await new Promise((r) => setTimeout(r, 10_000));
 
         // Stop the profile
         await client.stopProfile(profile.id);
