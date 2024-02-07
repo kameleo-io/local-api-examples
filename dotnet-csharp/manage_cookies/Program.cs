@@ -1,4 +1,4 @@
-﻿using OpenQA.Selenium.Chrome;
+﻿using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Remote;
 using System;
 using System.Collections.Generic;
@@ -34,7 +34,7 @@ namespace ManageCookies
 
             // Connect to the profile using WebDriver protocol
             var uri = new Uri($"http://localhost:{KameleoPort}/webdriver");
-            var opts = new ChromeOptions();
+            var opts = new FirefoxOptions();
             opts.AddAdditionalOption("kameleo:profileId", profile.Id.ToString());
             var webdriver = new RemoteWebDriver(uri, opts);
 
@@ -55,7 +55,7 @@ namespace ManageCookies
             // You can list all of your cookies
             var cookieList = await client.ListCookiesAsync(profile.Id);
             Console.WriteLine("The cookies of the profile: ");
-            foreach(var cookie in cookieList)
+            foreach (var cookie in cookieList)
             {
                 Console.WriteLine($"{cookie.Domain}, {cookie.Path}, {cookie.Name}");
             }
@@ -63,7 +63,7 @@ namespace ManageCookies
             // You can modify cookie or you can add new
             var newCookie = cookieList[0];
             newCookie.Value = "123";
-            var cookiesArray = new List<CookieRequest> {new CookieRequest(newCookie)};
+            var cookiesArray = new List<CookieRequest> { new CookieRequest(newCookie) };
             await client.AddCookiesAsync(profile.Id, cookiesArray);
 
             // You can delete all cookies of the profile

@@ -1,3 +1,3 @@
-kameleo.local_api_client==3.0.0
+kameleo.local_api_client==3.1.0
 pyppeteer
 asyncio

@@ -42,7 +42,7 @@ namespace StartBrowserWithAdditionalOptions
             });
 
             // Wait for 10 seconds
-            await Task.Delay(10000);
+            await Task.Delay(10_000);
 
             // Stop the profile
             await client.StopProfileAsync(profile.Id);

@@ -16,7 +16,7 @@ namespace UpdateProfile
             client.SetRetryPolicy(null);
 
             // Search a Base Profiles
-            var baseProfileList = await client.SearchBaseProfilesAsync();
+            var baseProfileList = await client.SearchBaseProfilesAsync(deviceType: "desktop");
 
             // Create a new profile with recommended settings
             // Choose one of the BaseProfiles
@@ -43,7 +43,7 @@ namespace UpdateProfile
             await client.StartProfileAsync(profile.Id);
 
             // Wait for 10 seconds
-            await Task.Delay(10000);
+            await Task.Delay(10_000);
 
             // Stop the profile
             await client.StopProfileAsync(profile.Id);
