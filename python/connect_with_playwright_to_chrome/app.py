@@ -26,10 +26,7 @@ create_profile_request = BuilderForCreateProfile \
     .build()
 profile = client.create_profile(body=create_profile_request)
 
-# Start the browser profile
-client.start_profile(profile.id)
-
-# Connect to the browser with Playwright through CDP
+# Start the Kameleo profile and connect with Playwright through CDP
 browser_ws_endpoint = f'ws://localhost:{kameleo_port}/playwright/{profile.id}'
 with sync_playwright() as playwright:
     browser = playwright.chromium.connect_over_cdp(endpoint_url=browser_ws_endpoint)
@@ -38,10 +35,9 @@ with sync_playwright() as playwright:
 
     # Use any Playwright command to drive the browser
     # and enjoy full protection from bot detection products
-    page.goto('https://google.com')
-    page.click('div[aria-modal="true"][tabindex="0"] button + button')
-    page.click('[name=q]')
-    page.keyboard.type('Kameleo')
+    page.goto('https://wikipedia.org')
+    page.click('[name=search]')
+    page.keyboard.type('Chameleon')
     page.keyboard.press('Enter')
 
 # Wait for 5 seconds

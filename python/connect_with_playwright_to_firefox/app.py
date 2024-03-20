@@ -27,10 +27,7 @@ create_profile_request = BuilderForCreateProfile \
     .build()
 profile = client.create_profile(body=create_profile_request)
 
-# Start the browser profile
-client.start_profile(profile.id)
-
-# Connect to the browser with Playwright
+# Start the Kameleo profile and connect with Playwright
 browser_ws_endpoint = f'ws://localhost:{kameleo_port}/playwright/{profile.id}'
 with sync_playwright() as playwright:
     # The exact path to the bridge executable is subject to change. Here, we use %LOCALAPPDATA%\Programs\Kameleo\pw-bridge.exe
@@ -52,15 +49,13 @@ with sync_playwright() as playwright:
 
     # Use any Playwright command to drive the browser
     # and enjoy full protection from bot detection products
-    page.goto('https://google.com')
-    page.click('div[aria-modal="true"][tabindex="0"] button + button')
-    page.click('[name=q]')
-    page.keyboard.type('Kameleo')
+    page.goto('https://wikipedia.org')
+    page.click('[name=search]')
+    page.keyboard.type('Chameleon')
     page.keyboard.press('Enter')
 
     # Wait for 5 seconds
     time.sleep(5)
 
-    # Here we need to close the browser object as well, it is not enough just to stop the profile
+    # Stop the browser by stopping the Kameleo profile
     client.stop_profile(profile.id)
-    browser.close()

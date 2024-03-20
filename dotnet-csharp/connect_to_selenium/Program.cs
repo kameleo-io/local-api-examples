@@ -30,10 +30,7 @@ namespace ConnectToSelenium
 
             var profile = await client.CreateProfileAsync(requestBody);
 
-            // Start the browser
-            await client.StartProfileAsync(profile.Id);
-
-            // Connect to the running browser instance using WebDriver
+            // Start the Kameleo profile and connect using WebDriver protocol
             var uri = new Uri($"http://localhost:{KameleoPort}/webdriver");
             var opts = new ChromeOptions();
             opts.AddAdditionalOption("kameleo:profileId", profile.Id.ToString());
@@ -42,14 +39,12 @@ namespace ConnectToSelenium
 
             // Use any WebDriver command to drive the browser
             // and enjoy full protection from bot detection products
-            webdriver.Navigate().GoToUrl("https://google.com");
-            webdriver.FindElement(By.CssSelector("div[aria-modal=\"true\"][tabindex=\"0\"] button + button")).Click();
-            webdriver.FindElement(By.Name("q")).SendKeys("Kameleo");
-            webdriver.FindElement(By.Name("q")).SendKeys(Keys.Enter);
-            var wait = new WebDriverWait(webdriver, TimeSpan.FromSeconds(10));
-            wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.Id("result-stats")));
+            webdriver.Navigate().GoToUrl("https://wikipedia.org");
+            webdriver.FindElement(By.Name("search")).SendKeys("Chameleon");
+            webdriver.FindElement(By.Name("search")).SendKeys(Keys.Enter);
+            webdriver.FindElement(By.Id("content"));
             var title = webdriver.Title;
-            Console.WriteLine("The title is " + title);
+            Console.WriteLine($"The title is {title}");
 
             // Stop the browser by stopping the Kameleo profile
             await client.StopProfileAsync(profile.Id);

@@ -29,10 +29,7 @@ namespace ConnectWithPlaywrightToFirefox
 
             var profile = await client.CreateProfileAsync(requestBody);
 
-            // Start the browser
-            await client.StartProfileAsync(profile.Id);
-
-            // Connect to the browser with Playwright
+            // Start the Kameleo profile and connect with Playwright
             var browserWsEndpoint = $"ws://localhost:{KameleoPort}/playwright/{profile.Id}";
 
             // The Playwright framework is not designed to connect to already running
@@ -58,10 +55,9 @@ namespace ConnectWithPlaywrightToFirefox
 
             // Use any Playwright command to drive the browser
             // and enjoy full protection from bot detection products
-            await page.GotoAsync("https://google.com");
-            await page.ClickAsync("div[aria-modal='true'][tabindex='0'] button + button");
-            await page.ClickAsync("[name=q]");
-            await page.Keyboard.TypeAsync("Kameleo");
+            await page.GotoAsync("https://wikipedia.org");
+            await page.ClickAsync("[name=search]");
+            await page.Keyboard.TypeAsync("Chameleon");
             await page.Keyboard.PressAsync("Enter");
 
             // Wait for 5 seconds

@@ -16,7 +16,7 @@ namespace UpgradeProfile
             client.SetRetryPolicy(null);
 
             // Search for a Desktop Base Profile with Windows OS and Chrome browser
-            var baseProfileList = await client.SearchBaseProfilesAsync("desktop","windows","chrome");
+            var baseProfileList = await client.SearchBaseProfilesAsync("desktop", "windows", "chrome");
 
             // Find a Base Profile with the oldest available version of chrome
             var baseProfile = baseProfileList.OrderBy(preview => preview.Browser.Major).First();

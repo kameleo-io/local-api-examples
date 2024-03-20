@@ -12,6 +12,11 @@ namespace StartWithProxy
 
         static async Task Main()
         {
+            var proxyHost = Environment.GetEnvironmentVariable("PROXY_HOST") ?? "<your_proxy_host>";
+            var proxyPort = Convert.ToInt32(Environment.GetEnvironmentVariable("PROXY_PORT") ?? "1080");
+            var proxyUsername = Environment.GetEnvironmentVariable("PROXY_USERNAME") ?? "<your_username>";
+            var proxyPassword = Environment.GetEnvironmentVariable("PROXY_PASSWORD") ?? "<your_password>";
+
             var client = new KameleoLocalApiClient(new Uri($"http://localhost:{KameleoPort}"));
             client.SetRetryPolicy(null);
 
@@ -24,7 +29,7 @@ namespace StartWithProxy
             var createProfileRequest = BuilderForCreateProfile
                 .ForBaseProfile(baseProfileList[0].Id)
                 .SetRecommendedDefaults()
-                .SetProxy("socks5", new Server("<proxy_host>", 1080, "<username>", "<password>"))
+                .SetProxy("socks5", new Server(proxyHost, proxyPort, proxyUsername, proxyPassword))
                 .Build();
 
             var profile = await client.CreateProfileAsync(createProfileRequest);
