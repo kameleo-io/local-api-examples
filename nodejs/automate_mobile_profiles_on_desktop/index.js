@@ -52,14 +52,10 @@ const { Builder, By, Key, until } = require('selenium-webdriver');
             });
         const webdriver = await builder.build();
 
-        // Automate the browser to perform a Google search and print the page title
-        await webdriver.get('https://google.com');
-        const button = await webdriver.findElement(By.css('div[aria-modal="true"][tabindex="0"] button + button'));
-        webdriver.executeScript('arguments[0].scrollIntoView();', button);
-        await webdriver.sleep(1000); // Wait for 1 second to simulate human-like interaction
-        await button.click();
-        await webdriver.findElement(By.name('q')).sendKeys('Kameleo', Key.ENTER);
-        await webdriver.wait(until.elementLocated(By.id('main')));
+        // Automate the browser to perform a Wikipedia search and print the page title
+        await webdriver.get('https://wikipedia.org');
+        await webdriver.findElement(By.name('search')).sendKeys('Chameleon', Key.ENTER);
+        await webdriver.wait(until.elementLocated(By.id('content')));
         const title = await webdriver.getTitle();
         console.log(`The title is ${title}`);
 

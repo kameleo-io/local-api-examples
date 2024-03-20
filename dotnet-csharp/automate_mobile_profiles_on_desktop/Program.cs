@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 using Kameleo.LocalApiClient;
 using Kameleo.LocalApiClient.Models;
@@ -17,20 +16,14 @@ namespace AutomateMobileProfilesOnDesktop
 
         static async Task Main()
         {
-
             var client = new KameleoLocalApiClient(new Uri($"http://localhost:{KameleoPort}"));
 
             // Search for a mobile Base Profiles
-            var baseProfileList = await client.SearchBaseProfilesAsync(
-            "mobile",
-            "ios",
-            "safari",
-            "en-us");
-
+            var baseProfileList = await client.SearchBaseProfilesAsync("mobile", "ios", "safari", "en-us");
 
             // Create a new profile with recommended settings
             // Choose one of the Base Profiles
-            // Set the launcher to 'chromium' so the mobile profile will be started in Chromium by Kameleo
+            // Set the launcher to 'chromium' so the mobile profile will be started in Chroma browser
             var createProfileRequest = BuilderForCreateProfile
                 .ForBaseProfile(baseProfileList[0].Id)
                 .SetRecommendedDefaults()
@@ -44,13 +37,11 @@ namespace AutomateMobileProfilesOnDesktop
             {
                 AdditionalOptions = new List<Preference>
                 {
-                    // This allows you to click on elements using the cursor when emulating a touch screen in the brower.
+                    // This allows you to click on elements using the cursor when emulating a touch screen in the browser.
                     // If you leave this out, your script may time out after clicks and fail.
                     new Preference("disableTouchEmulation", true),
                 }
             });
-
-
 
             // Connect to the running browser instance using WebDriver
             var uri = new Uri($"http://localhost:{KameleoPort}/webdriver");
@@ -60,19 +51,14 @@ namespace AutomateMobileProfilesOnDesktop
 
             // Use any WebDriver command to drive the browser
             // and enjoy full protection from bot detection products
-            webdriver.Navigate().GoToUrl("https://google.com");
-            var button = webdriver.FindElement(By.CssSelector("div[aria-modal=\"true\"][tabindex=\"0\"] button + button"));
-            ((IJavaScriptExecutor)webdriver).ExecuteScript("arguments[0].scrollIntoView();", button);
-            Thread.Sleep(1000);
-            button.Click();
-            webdriver.FindElement(By.Name("q")).SendKeys("Kameleo");
-            webdriver.FindElement(By.Name("q")).SendKeys(Keys.Enter);
-            webdriver.FindElement(By.Id("main"));
+            webdriver.Navigate().GoToUrl("https://wikipedia.org");
+            webdriver.FindElement(By.Name("search")).SendKeys("Chameleon");
+            webdriver.FindElement(By.Name("search")).SendKeys(Keys.Enter);
+            webdriver.FindElement(By.Id("content"));
             var title = webdriver.Title;
             Console.WriteLine($"The title is {title}");
 
-            // Wait for 5 seconds
-            Thread.Sleep(5000);
+            await Task.Delay(TimeSpan.FromSeconds(5));
 
             // Stop the browser by stopping the Kameleo profile
             await client.StopProfileAsync(profile.Id);

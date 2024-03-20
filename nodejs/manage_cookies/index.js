@@ -27,10 +27,7 @@ const { Builder } = require('selenium-webdriver');
             body: createProfileRequest,
         });
 
-        // Start the profile
-        await client.startProfile(profile.id);
-
-        // Connect to the profile using WebDriver protocol
+        // Start the Kameleo profile and connect to the profile using WebDriver protocol
         const builder = new Builder()
             .usingServer(`http://localhost:${kameleoPort}/webdriver`)
             .withCapabilities({
@@ -40,7 +37,7 @@ const { Builder } = require('selenium-webdriver');
         const webdriver = await builder.build();
 
         // Navigate to a site which give you cookies
-        await webdriver.get('https://google.com');
+        await webdriver.get('https://www.nytimes.com');
         await webdriver.sleep(5000);
 
         await webdriver.get('https://whoer.net');

@@ -1,0 +1,5 @@
+kameleo.local_api_client
+selenium
+playwright==1.41.1
+pyppeteer
+asyncio

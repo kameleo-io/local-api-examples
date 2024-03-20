@@ -29,10 +29,7 @@ namespace ManageCookies
 
             var profile = await client.CreateProfileAsync(createProfileRequest);
 
-            // Start the profile
-            await client.StartProfileAsync(profile.Id);
-
-            // Connect to the profile using WebDriver protocol
+            // Start the Kameleo profile and connect to it using WebDriver protocol
             var uri = new Uri($"http://localhost:{KameleoPort}/webdriver");
             var opts = new FirefoxOptions();
             opts.AddAdditionalOption("kameleo:profileId", profile.Id.ToString());
@@ -40,7 +37,7 @@ namespace ManageCookies
 
 
             // Navigate to a site which give you cookies
-            webdriver.Navigate().GoToUrl("https://google.com");
+            webdriver.Navigate().GoToUrl("https://www.nytimes.com");
             await Task.Delay(5000);
 
             webdriver.Navigate().GoToUrl("https://whoer.net");

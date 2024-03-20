@@ -28,20 +28,16 @@ async def main():
         .build()
     profile = client.create_profile(body=create_profile_request)
 
-    # Start the browser profile
-    client.start_profile(profile.id)
-
-    # Connect to the browser with Puppeteer through CDP
+    # Start the Kameleo profile and connect through CDP
     browser_ws_endpoint = f'ws://localhost:{kameleo_port}/puppeteer/{profile.id}'
     browser = await pyppeteer.launcher.connect(browserWSEndpoint=browser_ws_endpoint, defaultViewport=False)
     page = await browser.newPage()
 
     # Use any Puppeteer command to drive the browser
     # and enjoy full protection from bot detection products
-    await page.goto('https://google.com')
-    await page.click('div[aria-modal="true"][tabindex="0"] button + button')
-    await page.click('[name=q')
-    await page.keyboard.type('Kameleo')
+    await page.goto('https://wikipedia.org')
+    await page.click('[name=search')
+    await page.keyboard.type('Chameleon')
     await page.keyboard.press('Enter')
 
     # Wait for 5 seconds
@@ -50,4 +46,6 @@ async def main():
     # Stop the browser by stopping the Kameleo profile
     client.stop_profile(profile.id)
 
-asyncio.get_event_loop().run_until_complete(main())
+loop = asyncio.new_event_loop()
+asyncio.set_event_loop(loop)
+loop.run_until_complete(main())

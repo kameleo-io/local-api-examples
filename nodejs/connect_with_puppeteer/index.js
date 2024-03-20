@@ -29,9 +29,8 @@ const puppeteer = require('puppeteer');
         const profile = await client.createProfile({
             body: requestBody,
         });
-        await client.startProfile(profile.id);
 
-        // Connect to the browser through CDP
+        // Start the Kameleo profile and connect through CDP
         const browserWSEndpoint = `ws://localhost:${kameleoPort}/puppeteer/${profile.id}`;
         const browser = await puppeteer.connect({
             browserWSEndpoint, defaultViewport: null,
@@ -40,11 +39,9 @@ const puppeteer = require('puppeteer');
 
         // Use any Puppeteer command to drive the browser
         // and enjoy full protection from bot detection products
-        await page.goto('https://google.com');
-        const agreeButton = await page.$('div[aria-modal="true"][tabindex="0"] button + button');
-        await agreeButton.click();
-        await page.click('[name=q]');
-        await page.keyboard.type('Kameleo');
+        await page.goto('https://wikipedia.org');
+        await page.click('[name=search]');
+        await page.keyboard.type('Chameleon');
         await page.keyboard.press('Enter');
 
         // Wait for 5 seconds

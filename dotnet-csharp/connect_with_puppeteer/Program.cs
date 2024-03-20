@@ -27,20 +27,16 @@ namespace ConnectWithPuppeteer
 
             var profile = await client.CreateProfileAsync(requestBody);
 
-            // Start the browser
-            await client.StartProfileAsync(profile.Id);
-
-            // Connect to the browser through CDP
+            // Start the Kameleo profile and connect through CDP
             var browserWsEndpoint = $"ws://localhost:{KameleoPort}/puppeteer/{profile.Id}";
             var browser = await Puppeteer.ConnectAsync(new ConnectOptions { BrowserWSEndpoint = browserWsEndpoint, DefaultViewport = null });
             var page = await browser.NewPageAsync();
 
             // Use any Puppeteer command to drive the browser
             // and enjoy full protection from bot detection products
-            await page.GoToAsync("https://google.com");
-            await page.ClickAsync("div[aria-modal='true'][tabindex='0'] button + button");
-            await page.ClickAsync("[name=q]");
-            await page.Keyboard.TypeAsync("Kameleo");
+            await page.GoToAsync("https://wikipedia.org");
+            await page.ClickAsync("[name=search]");
+            await page.Keyboard.TypeAsync("Chameleon");
             await page.Keyboard.PressAsync("Enter");
 
             // Wait for 5 seconds
