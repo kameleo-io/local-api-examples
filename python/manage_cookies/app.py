@@ -27,10 +27,7 @@ create_profile_request = BuilderForCreateProfile \
     .build()
 profile = client.create_profile(body=create_profile_request)
 
-# Start the browser profile
-client.start_profile(profile.id)
-
-# Connect to the running browser instance using WebDriver
+# Start the Kameleo profile and connect using WebDriver protocol
 options = webdriver.ChromeOptions()
 options.add_experimental_option('kameleo:profileId', profile.id)
 driver = webdriver.Remote(
@@ -45,7 +42,7 @@ time.sleep(5)
 driver.get('https://youtube.com')
 time.sleep(5)
 
-driver.get('https://translate.google.com')
+driver.get('https://www.nytimes.com')
 time.sleep(5)
 
 # Stop the browser by stopping the Kameleo profile

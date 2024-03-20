@@ -26,10 +26,10 @@ const { KameleoLocalApiClient, BuilderForCreateProfile } = require('@kameleo/loc
             .setProxy(
                 'socks5',
                 {
-                    host: '<proxy_host>',
-                    port: 1080,
-                    id: '<username>',
-                    secret: '<password>',
+                    host: process.env.PROXY_HOST || '<your_proxy_host>',
+                    port: Number(process.env.PROXY_PORT) || 1080,
+                    id: process.env.PROXY_USERNAME || '<your_username>',
+                    secret: process.env.PROXY_PASSWORD || '<your_password>',
                 },
             )
             .build();

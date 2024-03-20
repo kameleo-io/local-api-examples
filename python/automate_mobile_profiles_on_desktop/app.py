@@ -26,7 +26,7 @@ base_profile_list = client.search_base_profiles(
 
 # Create a new profile with recommended settings
 # Choose one of the Base Profiles
-# Set the launcher to 'chromium' so the mobile profile will be started in Chromium by Kameleo
+# Set the launcher to 'chromium' so the mobile profile will be started in Chroma browser
 create_profile_request = BuilderForCreateProfile \
     .for_base_profile(base_profile_list[0].id) \
     .set_recommended_defaults() \
@@ -57,13 +57,9 @@ driver = webdriver.Remote(
 
 # Use any WebDriver command to drive the browser
 # and enjoy full protection from bot detection products
-driver.get('https://google.com')
-button = driver.find_element(By.CSS_SELECTOR, 'div[aria-modal="true"][tabindex="0"] button + button')
-driver.execute_script('arguments[0].scrollIntoView();', button)
-time.sleep(1)
-button.click()
-driver.find_element(By.NAME, 'q').send_keys('Kameleo', Keys.ENTER)
-WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, 'main')))
+driver.get('https://wikipedia.org')
+driver.find_element(By.NAME, 'search').send_keys('Chameleon', Keys.ENTER)
+WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, 'content')))
 print(f'The title is {driver.title}')
 
 # Wait for 5 seconds

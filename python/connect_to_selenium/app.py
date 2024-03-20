@@ -26,10 +26,7 @@ create_profile_request = BuilderForCreateProfile \
     .build()
 profile = client.create_profile(body=create_profile_request)
 
-# Start the browser profile
-client.start_profile(profile.id)
-
-# Connect to the running browser instance using WebDriver
+# Start the Kameleo profile and connect using WebDriver protocol
 options = webdriver.ChromeOptions()
 options.add_experimental_option('kameleo:profileId', profile.id)
 driver = webdriver.Remote(
@@ -39,9 +36,8 @@ driver = webdriver.Remote(
 
 # Use any WebDriver command to drive the browser
 # and enjoy full protection from bot detection products
-driver.get('https://google.com')
-driver.find_element('css selector', 'div[aria-modal="true"][tabindex="0"] button + button').click()
-driver.find_element('name', 'q').send_keys('Kameleo\n')
+driver.get('https://wikipedia.org')
+driver.find_element('name', 'search').send_keys('Chameleon\n')
 print(driver.title)
 
 # Wait for 5 seconds

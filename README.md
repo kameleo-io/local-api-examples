@@ -34,7 +34,7 @@ If you are interested in more information about Kameleo, or have encountered an 
 
 | Folder                                | Description                                                                                                                                               |
 |---------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
-| automate_mobile_profiles_on_desktop   | This code shows you how to emulate a mobile device in Chromium by Kameleo. And how to drive it with Selenium or any other automation framework.           |
+| automate_mobile_profiles_on_desktop   | This code shows you how to emulate a mobile device in Chroma browser. And how to drive it with Selenium or any other automation framework.                |
 | clean_workspace                       | Delete the profiles in your Kameleo Workspace. Useful when migrating to Kameleo 3, in particular                                                          |
 | connect_to_selenium                   | This code shows you how to launch a browser in Kameleo, perform actions using [Selenium](https://www.selenium.dev/) commands, and then close the browser. |
 | connect_with_playwright_to_chrome     | This code shows how to start a Chromium-based browser in Kameleo and automate tasks using the [Playwright](https://playwright.dev/) framework.            |

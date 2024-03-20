@@ -25,7 +25,7 @@ const { KameleoLocalApiClient, BuilderForCreateProfile } = require('@kameleo/loc
         });
 
         // export the profile to a given path
-        const result = await client.exportProfile(profile.id, {
+        await client.exportProfile(profile.id, {
             body: {
                 path: `${__dirname}\\test.kameleo`,
             },

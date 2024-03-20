@@ -25,10 +25,7 @@ const { Builder, By, Key, until } = require('selenium-webdriver');
             body: createProfileRequest,
         });
 
-        // Start the profile
-        await client.startProfile(profile.id);
-
-        // Connect to the profile using WebDriver protocol
+        // Start the Kameleo profile and connect using WebDriver protocol
         const builder = new Builder()
             .usingServer(`${kameleoCliUri}/webdriver`)
             .withCapabilities({
@@ -39,10 +36,9 @@ const { Builder, By, Key, until } = require('selenium-webdriver');
 
         // Use any WebDriver command to drive the browser
         // and enjoy full protection from bot detection products
-        await webdriver.get('https://google.com');
-        await webdriver.findElement(By.css('div[aria-modal="true"][tabindex="0"] button + button')).click();
-        await webdriver.findElement(By.name('q')).sendKeys('Kameleo', Key.ENTER);
-        await webdriver.wait(until.elementLocated(By.id('main')));
+        await webdriver.get('https://wikipedia.org');
+        await webdriver.findElement(By.name('search')).sendKeys('Chameleon', Key.ENTER);
+        await webdriver.wait(until.elementLocated(By.id('content')));
         const title = await webdriver.getTitle();
         console.log(`The title is ${title}`);
 

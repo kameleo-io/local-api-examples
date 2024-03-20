@@ -10,11 +10,13 @@ const { KameleoLocalApiClient } = require('@kameleo/local-api-client');
             noRetryPolicy: true,
         });
 
+        const promises = [];
         const profiles = await client.listProfiles();
-        for (const profile of profiles) {
-            await client.deleteProfile(profile.id);
+        for (let i = 0; i < profiles.length; i++) {
+            promises.push(client.deleteProfile(profiles[i].id));
         }
 
+        await Promise.all(promises);
         console.log(`${profiles.length} profiles deleted.`);
     } catch (error) {
         console.error(error);

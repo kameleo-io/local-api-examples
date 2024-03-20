@@ -28,9 +28,8 @@ const playwright = require('playwright');
         const profile = await client.createProfile({
             body: requestBody,
         });
-        await client.startProfile(profile.id);
 
-        // Connect to the browser with Playwright
+        // Start the Kameleo profile and connect with Playwright
         const browserWSEndpoint = `ws://localhost:${kameleoPort}/playwright/${profile.id}`;
         // The exact path to the bridge executable is subject to change. Here, we use %LOCALAPPDATA%\Programs\Kameleo\pw-bridge.exe
         const localAppDataPath = process.env.LOCALAPPDATA;
@@ -53,11 +52,9 @@ const playwright = require('playwright');
 
         // Use any Playwright command to drive the browser
         // and enjoy full protection from bot detection products
-        await page.goto('https://google.com');
-        const agreeButton = await page.$('div[aria-modal="true"][tabindex="0"] button + button');
-        await agreeButton.click();
-        await page.click('[name=q]');
-        await page.keyboard.type('Kameleo');
+        await page.goto('https://wikipedia.org');
+        await page.click('[name=search]');
+        await page.keyboard.type('Chameleon');
         await page.keyboard.press('Enter');
 
         // Wait for 5 seconds
