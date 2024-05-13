@@ -19,6 +19,7 @@ const { Builder, By, Key, until } = require('selenium-webdriver');
         // Choose one of the Base Profiles
         const createProfileRequest = BuilderForCreateProfile
             .forBaseProfile(baseProfileList[0].id)
+            .setName('connect to Selenium example')
             .setRecommendedDefaults()
             .build();
         const profile = await client.createProfile({

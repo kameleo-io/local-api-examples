@@ -23,6 +23,7 @@ base_profiles = client.search_base_profiles(
 # You can setup here all of the profile options like WebGL
 create_profile_request = BuilderForCreateProfile \
     .for_base_profile(base_profiles[0].id) \
+    .set_name('create profile example') \
     .set_recommended_defaults() \
     .set_webgl('noise') \
     .set_webgl_meta('manual', WebglMetaSpoofingOptions(vendor='Google Inc.',

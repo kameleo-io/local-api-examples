@@ -29,6 +29,7 @@ base_profile_list = client.search_base_profiles(
 # Set the launcher to 'chromium' so the mobile profile will be started in Chroma browser
 create_profile_request = BuilderForCreateProfile \
     .for_base_profile(base_profile_list[0].id) \
+    .set_name('automate mobile profiles on desktop example') \
     .set_recommended_defaults() \
     .set_launcher('chromium') \
     .build()

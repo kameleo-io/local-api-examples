@@ -24,6 +24,7 @@ base_profile = sorted(base_profiles, key=lambda x: x.browser.major)[0]
 # Choose one of the Base Profiles
 create_profile_request = BuilderForCreateProfile \
     .for_base_profile(base_profile.id) \
+    .set_name('upgrade profiles example') \
     .set_recommended_defaults() \
     .build()
 profile = client.create_profile(body=create_profile_request)

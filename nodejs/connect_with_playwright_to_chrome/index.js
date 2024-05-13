@@ -22,6 +22,7 @@ const playwright = require('playwright');
         // for browser fingerprint protection
         const requestBody = BuilderForCreateProfile
             .forBaseProfile(baseProfiles[0].id)
+            .setName('connect with Playwright to Chrome example')
             .setRecommendedDefaults()
             .build();
 
