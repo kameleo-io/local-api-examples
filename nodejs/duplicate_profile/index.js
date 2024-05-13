@@ -20,6 +20,7 @@ const { KameleoLocalApiClient, BuilderForCreateProfile } = require('@kameleo/loc
         // Choose one of the BaseProfiles
         const createProfileRequest = BuilderForCreateProfile
             .forBaseProfile(baseProfileList[0].id)
+            .setName('duplicate profile example')
             .setRecommendedDefaults()
             .build();
         const profile = await client.createProfile({

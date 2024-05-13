@@ -28,6 +28,7 @@ base_profiles = client.search_base_profiles(
 # Choose one of the Chrome BaseProfiles
 create_profile_request = BuilderForCreateProfile \
     .for_base_profile(base_profiles[0].id) \
+    .set_name('find base profile examples') \
     .set_recommended_defaults() \
     .build()
 profile = client.create_profile(body=create_profile_request)

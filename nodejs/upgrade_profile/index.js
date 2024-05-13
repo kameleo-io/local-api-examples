@@ -24,6 +24,7 @@ const { KameleoLocalApiClient, BuilderForCreateProfile } = require('@kameleo/loc
         // Choose one of the BaseProfiles
         const createProfileRequest = BuilderForCreateProfile
             .forBaseProfile(baseProfile.id)
+            .setName('upgrade profiles example')
             .setRecommendedDefaults()
             .build();
         let profile = await client.createProfile({

@@ -20,6 +20,7 @@ const { KameleoLocalApiClient, BuilderForCreateProfile } = require('@kameleo/loc
         // Choose one of the Chrome BaseProfiles
         const createProfileRequest = BuilderForCreateProfile
             .forBaseProfile(chromeBaseProfileList[0].id)
+            .setName('start browser with additional options example')
             .setRecommendedDefaults()
             .build();
         const profile = await client.createProfile({
@@ -30,11 +31,37 @@ const { KameleoLocalApiClient, BuilderForCreateProfile } = require('@kameleo/loc
         // Use this command to customize the browser process by adding command-line arguments
         //  like '--mute-audio' or '--start-maximized'
         //  or modify the native profile settings when starting the browser
+
+        // start the browser with the --mute-audio command line argument
         await client.startProfileWithOptions(profile.id, {
             body: {
                 argumentsProperty: [
                     'mute-audio',
                 ],
+            },
+        });
+        // Wait for 10 seconds
+        await new Promise((r) => setTimeout(r, 10_000));
+        // Stop the profile
+        await client.stopProfile(profile.id);
+
+        // start the browser with an additional Selenum option
+        await client.startProfileWithOptions(profile.id, {
+            body: {
+                additionalOptions: [
+                    {
+                        key: 'pageLoadStrategy',
+                        value: 'eager',
+                    },
+                ],
+            },
+        });
+        await new Promise((r) => setTimeout(r, 10_000));
+        await client.stopProfile(profile.id);
+
+        // start the browser and also set a Chrome preference
+        await client.startProfileWithOptions(profile.id, {
+            body: {
                 preferences: [
                     {
                         key: 'profile.managed_default_content_settings.images',
@@ -43,11 +70,7 @@ const { KameleoLocalApiClient, BuilderForCreateProfile } = require('@kameleo/loc
                 ],
             },
         });
-
-        // Wait for 10 seconds
         await new Promise((r) => setTimeout(r, 10_000));
-
-        // Stop the profile
         await client.stopProfile(profile.id);
     } catch (error) {
         console.error(error);

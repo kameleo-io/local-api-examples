@@ -21,6 +21,7 @@ const { KameleoLocalApiClient, BuilderForCreateProfile } = require('@kameleo/loc
         // You can setup here all of the profile options like WebGL, password manager and start page
         const createProfileRequest = BuilderForCreateProfile
             .forBaseProfile(chromeBaseProfileList[0].id)
+            .setName('create profile example')
             .setRecommendedDefaults()
             .setWebgl('noise')
             .setWebglMeta(
