@@ -24,6 +24,7 @@ async def main():
     # Choose one of the Base Profiles
     create_profile_request = BuilderForCreateProfile \
         .for_base_profile(base_profiles[0].id) \
+        .set_name('connect with Puppeteer example') \
         .set_recommended_defaults() \
         .build()
     profile = client.create_profile(body=create_profile_request)

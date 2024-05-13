@@ -1,4 +1,5 @@
 const { KameleoLocalApiClient, BuilderForCreateProfile } = require('@kameleo/local-api-client');
+const path = require('path');
 
 (async () => {
     try {
@@ -18,6 +19,7 @@ const { KameleoLocalApiClient, BuilderForCreateProfile } = require('@kameleo/loc
         // Create a new profile with recommended settings
         const createProfileRequest = BuilderForCreateProfile
             .forBaseProfile(baseProfileList[0].id)
+            .setName('profile export import example')
             .setRecommendedDefaults()
             .build();
         let profile = await client.createProfile({
@@ -25,9 +27,11 @@ const { KameleoLocalApiClient, BuilderForCreateProfile } = require('@kameleo/loc
         });
 
         // export the profile to a given path
+        const exportPath = path.join(__dirname, 'test.kameleo');
+
         await client.exportProfile(profile.id, {
             body: {
-                path: `${__dirname}\\test.kameleo`,
+                path: exportPath,
             },
         });
         console.log('Profile has been exported to', __dirname);
@@ -38,7 +42,7 @@ const { KameleoLocalApiClient, BuilderForCreateProfile } = require('@kameleo/loc
         // import the profile from the given url
         profile = await client.importProfile({
             body: {
-                path: `${__dirname}\\test.kameleo`,
+                path: exportPath,
             },
         });
 

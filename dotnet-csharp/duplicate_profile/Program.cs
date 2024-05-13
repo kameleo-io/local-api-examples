@@ -1,34 +1,25 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Kameleo.LocalApiClient;
 
-namespace DuplicateProfile
-{
-    class Program
-    {
-        // This is the port Kameleo.CLI is listening on. Default value is 5050, but can be overridden in appsettings.json file
-        private const int KameleoPort = 5050;
+// This is the port Kameleo.CLI is listening on. Default value is 5050, but can be overridden in appsettings.json file
+const int KameleoPort = 5050;
 
-        static async Task Main()
-        {
-            var client = new KameleoLocalApiClient(new Uri($"http://localhost:{KameleoPort}"));
-            client.SetRetryPolicy(null);
+var client = new KameleoLocalApiClient(new Uri($"http://localhost:{KameleoPort}"));
+client.SetRetryPolicy(null);
 
-            // Search Chrome Base Profiles
-            var baseProfileList = await client.SearchBaseProfilesAsync(deviceType: "desktop", browserProduct: "chrome");
+// Search Chrome Base Profiles
+var baseProfileList = await client.SearchBaseProfilesAsync(deviceType: "desktop", browserProduct: "chrome");
 
-            // Create a new profile with recommended settings
-            // Choose one of the BaseProfiles
-            // You can setup here all of the profile options
-            var createProfileRequest = BuilderForCreateProfile
-                .ForBaseProfile(baseProfileList[0].Id)
-                .SetRecommendedDefaults()
-                .Build();
+// Create a new profile with recommended settings
+// Choose one of the BaseProfiles
+// You can setup here all of the profile options
+var createProfileRequest = BuilderForCreateProfile
+    .ForBaseProfile(baseProfileList[0].Id)
+    .SetName("duplicate profile example")
+    .SetRecommendedDefaults()
+    .Build();
 
-            var profile = await client.CreateProfileAsync(createProfileRequest);
+var profile = await client.CreateProfileAsync(createProfileRequest);
 
-            var duplicatedProfile = await client.DuplicateProfileAsync(profile.Id);
-            Console.WriteLine($"Profile '{duplicatedProfile.Name}' is just created.");
-        }
-    }
-}
+var duplicatedProfile = await client.DuplicateProfileAsync(profile.Id);
+Console.WriteLine($"Profile '{duplicatedProfile.Name}' is just created.");

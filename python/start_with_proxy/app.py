@@ -29,6 +29,7 @@ base_profiles = client.search_base_profiles(
 # You can set your proxy up in the set_proxy method
 create_profile_request = BuilderForCreateProfile \
     .for_base_profile(base_profiles[0].id) \
+    .set_name('start with proxy example') \
     .set_recommended_defaults() \
     .set_proxy('socks5', Server(host=PROXY_HOST, port=PROXY_PORT, id=PROXY_USERNAME, secret=PROXY_PASSWORD)) \
     .build()

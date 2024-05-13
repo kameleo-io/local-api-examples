@@ -22,6 +22,7 @@ const { KameleoLocalApiClient, BuilderForCreateProfile } = require('@kameleo/loc
         // You can set your proxy up in the setProxy method
         const createProfileRequest = BuilderForCreateProfile
             .forBaseProfile(chromeBaseProfileList[0].id)
+            .setName('start with proxy example')
             .setRecommendedDefaults()
             .setProxy(
                 'socks5',

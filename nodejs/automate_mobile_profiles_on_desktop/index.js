@@ -22,6 +22,7 @@ const { Builder, By, Key, until } = require('selenium-webdriver');
         // Set it with recommended default settings and use Chromium as the launcher.
         const createProfileRequest = BuilderForCreateProfile
             .forBaseProfile(baseProfileList[0].id)
+            .setName('automate mobile profiles on desktop example')
             .setRecommendedDefaults()
             .setLauncher('chromium')
             .build();

@@ -22,6 +22,7 @@ base_profiles = client.search_base_profiles(
 # You can setup here all of the profile options like WebGL
 create_profile_request = BuilderForCreateProfile \
     .for_base_profile(base_profiles[0].id) \
+    .set_name('update profile example') \
     .set_recommended_defaults() \
     .build()
 profile = client.create_profile(body=create_profile_request)

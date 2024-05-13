@@ -23,6 +23,7 @@ const puppeteer = require('puppeteer');
         // for browser fingerprint protection
         const requestBody = BuilderForCreateProfile
             .forBaseProfile(baseProfiles[0].id)
+            .setName('connect with Puppeteer example')
             .setRecommendedDefaults()
             .build();
 

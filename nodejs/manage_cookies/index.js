@@ -21,6 +21,7 @@ const { Builder } = require('selenium-webdriver');
         // Choose one of the Base Profiles
         const createProfileRequest = BuilderForCreateProfile
             .forBaseProfile(baseProfileList[0].id)
+            .setName('manage cookies example')
             .setRecommendedDefaults()
             .build();
         const profile = await client.createProfile({

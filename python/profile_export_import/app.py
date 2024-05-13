@@ -24,18 +24,19 @@ base_profiles = client.search_base_profiles(
 # Choose one of the Chrome BaseProfiles
 create_profile_request = BuilderForCreateProfile \
     .for_base_profile(base_profiles[0].id) \
+    .set_name('profile export import example') \
     .set_recommended_defaults() \
     .build()
 profile = client.create_profile(body=create_profile_request)
 
 # Export the profile to a given path
 folder = os.path.dirname(os.path.realpath(__file__))
-path = f'{folder}\\test.kameleo'
+path = os.path.join(folder, 'test.kameleo')
 result = client.export_profile(profile.id, body=ExportProfileRequest(path=path))
 print(f'Profile has been exported to {folder}')
 
 # You have to delete this profile if you want to import back
-client.delete_profile(profile.id);
+client.delete_profile(profile.id)
 
 # Import the profile from the given url
 profile = client.import_profile(body=ImportProfileRequest(path=path))

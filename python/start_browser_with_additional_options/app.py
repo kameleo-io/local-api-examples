@@ -23,6 +23,7 @@ base_profiles = client.search_base_profiles(
 # Choose one of the Chrome BaseProfiles
 create_profile_request = BuilderForCreateProfile \
     .for_base_profile(base_profiles[0].id) \
+    .set_name('start browser with additional options example') \
     .set_recommended_defaults() \
     .build()
 profile = client.create_profile(body=create_profile_request)
@@ -31,15 +32,30 @@ profile = client.create_profile(body=create_profile_request)
 # Use this command to customize the browser process by adding command-line arguments
 #  like '--mute-audio' or '--start-maximized'
 #  or modify the native profile settings when starting the browser
+
+# start the browser with the --mute-audio command line argument
 client.start_profile_with_options(profile.id, WebDriverSettings(
     arguments=['mute-audio'],
+))
+# Wait for 10 seconds
+time.sleep(10)
+# Stop the profile
+client.stop_profile(profile.id)
+
+# start the browser with an additional Selenum option
+client.start_profile_with_options(profile.id, WebDriverSettings(
+    additional_options=[
+        Preference(key='pageLoadStrategy', value='eager'),
+    ]
+))
+time.sleep(10)
+client.stop_profile(profile.id)
+
+# start the browser and also set a Chrome preference
+client.start_profile_with_options(profile.id, WebDriverSettings(
     preferences=[
         Preference(key='profile.managed_default_content_settings.images', value=2),
     ]
-))
-
-# Wait for 10 seconds
+)) 
 time.sleep(10)
-
-# Stop the browser by stopping the Kameleo profile
 client.stop_profile(profile.id)
