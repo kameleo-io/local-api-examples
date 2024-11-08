@@ -1,0 +1,4 @@
+{
+  "line-length": false,
+  "list-marker-space": { "ul_multi": 3, "ul_single": 3 },
+}
