@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Kameleo.LocalApiClient;
 using PuppeteerSharp;
 
 // This is the port Kameleo.CLI is listening on. Default value is 5050, but can be overridden in appsettings.json file
-const int KameleoPort = 5050;
+if (!int.TryParse(Environment.GetEnvironmentVariable("KAMELEO_PORT"), out var KameleoPort))
+{
+    KameleoPort = 5050;
+}
 
 var client = new KameleoLocalApiClient(new Uri($"http://localhost:{KameleoPort}"));
 client.SetRetryPolicy(null);
@@ -24,7 +28,10 @@ var profile = await client.CreateProfileAsync(requestBody);
 // Start the Kameleo profile and connect through CDP
 var browserWsEndpoint = $"ws://localhost:{KameleoPort}/puppeteer/{profile.Id}";
 var browser = await Puppeteer.ConnectAsync(new ConnectOptions
-    { BrowserWSEndpoint = browserWsEndpoint, DefaultViewport = null });
+{
+    BrowserWSEndpoint = browserWsEndpoint,
+    DefaultViewport = null
+});
 var page = await browser.NewPageAsync();
 
 // Use any Puppeteer command to drive the browser
@@ -35,7 +42,7 @@ await page.Keyboard.TypeAsync("Chameleon");
 await page.Keyboard.PressAsync("Enter");
 
 // Wait for 5 seconds
-await page.WaitForTimeoutAsync(5000);
+await Task.Delay(5_000);
 
 // Stop the browser by stopping the Kameleo profile
 await client.StopProfileAsync(profile.Id);

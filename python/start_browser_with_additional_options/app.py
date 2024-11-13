@@ -1,12 +1,13 @@
 from kameleo.local_api_client import KameleoLocalApiClient
 from kameleo.local_api_client.builder_for_create_profile import BuilderForCreateProfile
 import time
+import os
 
 from kameleo.local_api_client.models import WebDriverSettings, Preference
 
 
 # This is the port Kameleo.CLI is listening on. Default value is 5050, but can be overridden in appsettings.json file
-kameleo_port = 5050
+kameleo_port = os.getenv('KAMELEO_PORT', '5050')
 
 client = KameleoLocalApiClient(
     endpoint=f'http://localhost:{kameleo_port}',

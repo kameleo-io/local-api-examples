@@ -4,12 +4,19 @@ using Kameleo.LocalApiClient;
 using Kameleo.LocalApiClient.Models;
 
 // This is the port Kameleo.CLI is listening on. Default value is 5050, but can be overridden in appsettings.json file
-const int KameleoPort = 5050;
+if (!int.TryParse(Environment.GetEnvironmentVariable("KAMELEO_PORT"), out var KameleoPort))
+{
+    KameleoPort = 5050;
+}
 
+// Read proxy settings from environment variables or from code
 var proxyHost = Environment.GetEnvironmentVariable("PROXY_HOST") ?? "<your_proxy_host>";
-var proxyPort = Convert.ToInt32(Environment.GetEnvironmentVariable("PROXY_PORT") ?? "1080");
 var proxyUsername = Environment.GetEnvironmentVariable("PROXY_USERNAME") ?? "<your_username>";
 var proxyPassword = Environment.GetEnvironmentVariable("PROXY_PASSWORD") ?? "<your_password>";
+if (!int.TryParse(Environment.GetEnvironmentVariable("PROXY_PORT"), out var proxyPort))
+{
+    proxyPort = 1080;
+}
 
 var client = new KameleoLocalApiClient(new Uri($"http://localhost:{KameleoPort}"));
 client.SetRetryPolicy(null);

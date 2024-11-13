@@ -1,0 +1,10 @@
+{
+  "name": "basic_profile_operations",
+  "description": "This script initializes a Kameleo client, creates and starts a customized Chrome browser profile with specific WebGL settings and a password manager enabled.",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "lint": "eslint --fix --config ../.eslintrc.js ."
+  }
+}

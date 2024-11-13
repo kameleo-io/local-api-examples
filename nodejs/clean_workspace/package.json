@@ -1,23 +1,10 @@
 {
-  "name": "create_profile",
-  "version": "1.0.0",
+  "name": "clean_workspace",
   "description": "This script initializes a Kameleo client, creates and starts a customized Chrome browser profile with specific WebGL settings and a password manager enabled.",
+  "type": "module",
   "main": "index.js",
-  "engines": {
-    "node": ">=14.0.0"
-  },
   "scripts": {
     "start": "node index.js",
     "lint": "eslint --fix --config ../.eslintrc.js ."
-  },
-  "author": "Kameleo Team",
-  "license": "ISC",
-  "devDependencies": {
-    "eslint": "^8.42.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.27.5"
-  },
-  "dependencies": {
-    "@kameleo/local-api-client": "^3.2.0"
   }
 }

@@ -5,7 +5,10 @@ using Kameleo.LocalApiClient;
 using Kameleo.LocalApiClient.Models;
 
 // This is the port Kameleo.CLI is listening on. Default value is 5050, but can be overridden in appsettings.json file
-const int KameleoPort = 5050;
+if (!int.TryParse(Environment.GetEnvironmentVariable("KAMELEO_PORT"), out var KameleoPort))
+{
+    KameleoPort = 5050;
+}
 
 var client = new KameleoLocalApiClient(new Uri($"http://localhost:{KameleoPort}"));
 client.SetRetryPolicy(null);
@@ -33,8 +36,10 @@ await client.StartProfileWithOptionsAsync(profile.Id, new WebDriverSettings
 {
     Arguments = new List<string> { "mute-audio" }
 });
+
 // Wait for 10 seconds
 await Task.Delay(10_000);
+
 // Stop the profile
 await client.StopProfileAsync(profile.Id);
 
@@ -43,7 +48,11 @@ await client.StartProfileWithOptionsAsync(profile.Id, new WebDriverSettings
 {
     AdditionalOptions = new List<Preference> { new("pageLoadStrategy", "eager") }
 });
+
+// Wait for 10 seconds
 await Task.Delay(10_000);
+
+// Stop the profile
 await client.StopProfileAsync(profile.Id);
 
 // start the browser and also set a Chrome preference
@@ -51,5 +60,9 @@ await client.StartProfileWithOptionsAsync(profile.Id, new WebDriverSettings
 {
     Preferences = new List<Preference> { new("profile.managed_default_content_settings.images", 2), }
 });
+
+// Wait for 10 seconds
 await Task.Delay(10_000);
+
+// Stop the profile
 await client.StopProfileAsync(profile.Id);
