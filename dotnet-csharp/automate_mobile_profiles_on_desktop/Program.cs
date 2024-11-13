@@ -8,7 +8,10 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Remote;
 
 // This is the port Kameleo.CLI is listening on. Default value is 5050, but can be overridden in appsettings.json file
-const int KameleoPort = 5050;
+if (!int.TryParse(Environment.GetEnvironmentVariable("KAMELEO_PORT"), out var KameleoPort))
+{
+    KameleoPort = 5050;
+}
 
 var client = new KameleoLocalApiClient(new Uri($"http://localhost:{KameleoPort}"));
 
@@ -41,8 +44,9 @@ await client.StartProfileWithOptionsAsync(profile.Id, new WebDriverSettings()
 // Connect to the running browser instance using WebDriver
 var uri = new Uri($"http://localhost:{KameleoPort}/webdriver");
 var opts = new ChromeOptions();
-opts.AddAdditionalOption("kameleo:profileId", profile.Id);
+opts.AddAdditionalOption("kameleo:profileId", profile.Id.ToString());
 var webdriver = new RemoteWebDriver(uri, opts);
+webdriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(3);
 
 // Use any WebDriver command to drive the browser
 // and enjoy full protection from bot detection products

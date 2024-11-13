@@ -6,10 +6,11 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 import time
+import os
 
 
 # This is the port Kameleo.CLI is listening on. Default value is 5050, but can be overridden in appsettings.json file
-kameleo_port = 5050
+kameleo_port = os.getenv('KAMELEO_PORT', '5050')
 
 client = KameleoLocalApiClient(
     endpoint=f'http://localhost:{kameleo_port}',

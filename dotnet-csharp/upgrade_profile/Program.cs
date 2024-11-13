@@ -4,7 +4,10 @@ using System.Threading.Tasks;
 using Kameleo.LocalApiClient;
 
 // This is the port Kameleo.CLI is listening on. Default value is 5050, but can be overridden in appsettings.json file
-const int KameleoPort = 5050;
+if (!int.TryParse(Environment.GetEnvironmentVariable("KAMELEO_PORT"), out var KameleoPort))
+{
+    KameleoPort = 5050;
+}
 
 var client = new KameleoLocalApiClient(new Uri($"http://localhost:{KameleoPort}"));
 client.SetRetryPolicy(null);
@@ -37,7 +40,7 @@ Console.WriteLine(
 await client.StartProfileAsync(profile.Id);
 
 // Wait for 5 seconds
-await Task.Delay(5000);
+await Task.Delay(5_000);
 
 // Stop the profile
 await client.StopProfileAsync(profile.Id);

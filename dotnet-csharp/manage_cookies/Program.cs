@@ -7,7 +7,10 @@ using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Remote;
 
 // This is the port Kameleo.CLI is listening on. Default value is 5050, but can be overridden in appsettings.json file
-const int KameleoPort = 5050;
+if (!int.TryParse(Environment.GetEnvironmentVariable("KAMELEO_PORT"), out var KameleoPort))
+{
+    KameleoPort = 5050;
+}
 
 var client = new KameleoLocalApiClient(new Uri($"http://localhost:{KameleoPort}"));
 client.SetRetryPolicy(null);
@@ -27,19 +30,19 @@ var profile = await client.CreateProfileAsync(createProfileRequest);
 // Start the Kameleo profile and connect to it using WebDriver protocol
 var uri = new Uri($"http://localhost:{KameleoPort}/webdriver");
 var opts = new FirefoxOptions();
-opts.AddAdditionalOption("kameleo:profileId", profile.Id);
+opts.AddAdditionalOption("kameleo:profileId", profile.Id.ToString());
 var webdriver = new RemoteWebDriver(uri, opts);
 
 
 // Navigate to a site which give you cookies
 webdriver.Navigate().GoToUrl("https://www.nytimes.com");
-await Task.Delay(5000);
+await Task.Delay(5_000);
 
 webdriver.Navigate().GoToUrl("https://whoer.net");
-await Task.Delay(5000);
+await Task.Delay(5_000);
 
 webdriver.Navigate().GoToUrl("https://www.youtube.com");
-await Task.Delay(5000);
+await Task.Delay(5_000);
 
 // Stop the profile
 await client.StopProfileAsync(profile.Id);

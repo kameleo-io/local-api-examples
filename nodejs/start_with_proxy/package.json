@@ -1,23 +1,10 @@
 {
   "name": "start_with_proxy",
-  "version": "1.0.0",
   "description": "This script demonstrates how to create a Kameleo profile with a SOCKS5 proxy setup using the Kameleo Local API client.",
+  "type": "module",
   "main": "index.js",
-  "engines": {
-    "node": ">=14.0.0"
-  },
   "scripts": {
     "start": "node index.js",
     "lint": "eslint --fix --config ../.eslintrc.js ."
-  },
-  "author": "Kameleo Team",
-  "license": "ISC",
-  "devDependencies": {
-    "eslint": "^8.42.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.27.5"
-  },
-  "dependencies": {
-    "@kameleo/local-api-client": "^3.2.0"
   }
 }

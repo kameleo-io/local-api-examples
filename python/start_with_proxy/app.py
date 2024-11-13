@@ -6,12 +6,12 @@ import os
 
 
 # This is the port Kameleo.CLI is listening on. Default value is 5050, but can be overridden in appsettings.json file
-kameleo_port = 5050
+kameleo_port = os.getenv('KAMELEO_PORT', '5050')
 
-PROXY_HOST = os.getenv('PROXY_HOST', 'your proxy host')
-PROXY_PORT = os.getenv('PROXY_PORT', 'your proxy port')
-PROXY_USERNAME = os.getenv('PROXY_USERNAME', 'your proxy username')
-PROXY_PASSWORD = os.getenv('PROXY_PASSWORD', 'your proxy password')
+PROXY_HOST = os.getenv('PROXY_HOST', '<your_proxy_host>')
+PROXY_PORT = os.getenv('PROXY_PORT', '<your_proxy_port>')
+PROXY_USERNAME = os.getenv('PROXY_USERNAME', '<your_proxy_username>')
+PROXY_PASSWORD = os.getenv('PROXY_PASSWORD', '<your_proxy_password>')
 
 client = KameleoLocalApiClient(
     endpoint=f'http://localhost:{kameleo_port}',

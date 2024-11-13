@@ -2,12 +2,12 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <RootNamespace>ProfileExportLoad</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Kameleo.LocalApiClient" Version="*" />
+    <PackageReference Include="Kameleo.LocalApiClient" Version="3.4.0" />
   </ItemGroup>
 
 </Project>
