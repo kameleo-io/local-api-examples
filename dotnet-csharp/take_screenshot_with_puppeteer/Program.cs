@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using Kameleo.LocalApiClient;
+using Kameleo.LocalApiClient.Model;
 using PuppeteerSharp;
 
 // This is the port Kameleo.CLI is listening on. Default value is 5050, but can be overridden in appsettings.json file
@@ -10,20 +11,18 @@ if (!int.TryParse(Environment.GetEnvironmentVariable("KAMELEO_PORT"), out var Ka
 }
 
 var client = new KameleoLocalApiClient(new Uri($"http://localhost:{KameleoPort}"));
-client.SetRetryPolicy(null);
 
-// Search Chrome Base Profiles
-var baseProfiles = await client.SearchBaseProfilesAsync(deviceType: "desktop", browserProduct: "chrome");
+// Search Chrome fingerprints
+var fingerprints = await client.Fingerprint.SearchFingerprintsAsync(deviceType: "desktop", browserProduct: "chrome");
 
 // Create a new profile with recommended settings
 // for browser fingerprint protection
-var requestBody = BuilderForCreateProfile
-    .ForBaseProfile(baseProfiles[0].Id)
-    .SetName("take screenshot example")
-    .SetRecommendedDefaults()
-    .Build();
+var createProfileRequest = new CreateProfileRequest(fingerprints[0].Id)
+{
+    Name = "take screenshot example",
+};
 
-var profile = await client.CreateProfileAsync(requestBody);
+var profile = await client.Profile.CreateProfileAsync(createProfileRequest);
 
 // Start the Kameleo profile and connect through CDP
 var browserWsEndpoint = $"ws://localhost:{KameleoPort}/puppeteer/{profile.Id}";
@@ -45,4 +44,4 @@ await page.ScreenshotAsync(targetFile, new ScreenshotOptions { Type = Screenshot
 Console.WriteLine(targetFile);
 
 // Stop the browser by stopping the Kameleo profile
-await client.StopProfileAsync(profile.Id);
+await client.Profile.StopProfileAsync(profile.Id);

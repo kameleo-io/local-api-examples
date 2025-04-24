@@ -8,15 +8,14 @@ if (!int.TryParse(Environment.GetEnvironmentVariable("KAMELEO_PORT"), out var Ka
 }
 
 var client = new KameleoLocalApiClient(new Uri($"http://localhost:{KameleoPort}"));
-client.SetRetryPolicy(null);
 
 // List all existing profiles
-var profiles = await client.ListProfilesAsync();
+var profiles = await client.Profile.ListProfilesAsync();
 
 // Delete profiles one by one
 foreach (var profile in profiles)
 {
-    await client.DeleteProfileAsync(profile.Id);
+    await client.Profile.DeleteProfileAsync(profile.Id);
 }
 
 Console.WriteLine($"{profiles.Count} profiles deleted.");

@@ -5,12 +5,11 @@ import os
 kameleo_port = os.getenv('KAMELEO_PORT', '5050')
 
 client = KameleoLocalApiClient(
-    endpoint=f'http://localhost:{kameleo_port}',
-    retry_total=0
+    endpoint=f'http://localhost:{kameleo_port}'
 )
 
-profiles = client.list_profiles()
+profiles = client.profile.list_profiles()
 for profile in profiles:
-    client.delete_profile(profile.id)
+    client.profile.delete_profile(profile.id)
 
 print(f'{len(profiles)} profiles deleted.')
