@@ -1,10 +1,9 @@
 {
   "name": "basic_profile_operations",
-  "description": "This script initializes a Kameleo client, creates and starts a customized Chrome browser profile with specific WebGL settings and a password manager enabled.",
+  "description": "Shows basic profile operations with the Kameleo API, like finding the right fingerprint, creating profiles, duplicating them, modifying their spoofing options, launching the browser",
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "lint": "eslint --fix --config ../.eslintrc.js ."
+    "start": "node index.js"
   }
 }

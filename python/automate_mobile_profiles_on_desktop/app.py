@@ -1,5 +1,5 @@
 from kameleo.local_api_client import KameleoLocalApiClient
-from kameleo.local_api_client.builder_for_create_profile import BuilderForCreateProfile
+from kameleo.local_api_client.models import CreateProfileRequest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -13,31 +13,26 @@ import os
 kameleo_port = os.getenv('KAMELEO_PORT', '5050')
 
 client = KameleoLocalApiClient(
-    endpoint=f'http://localhost:{kameleo_port}',
-    retry_total=0
+    endpoint=f'http://localhost:{kameleo_port}'
 )
 
-# Search for a mobile Base Profiles
-base_profile_list = client.search_base_profiles(
+# Search for a mobile fingerprints
+fingerprints = client.fingerprint.search_fingerprints(
     device_type='mobile',
     os_family='ios',
-    browser_product='safari',
-    language='en-us'
+    browser_product='safari'
 )
 
-# Create a new profile with recommended settings
-# Choose one of the Base Profiles
-# Set the launcher to 'chromium' so the mobile profile will be started in Chroma browser
-create_profile_request = BuilderForCreateProfile \
-    .for_base_profile(base_profile_list[0].id) \
-    .set_name('automate mobile profiles on desktop example') \
-    .set_recommended_defaults() \
-    .set_launcher('chromium') \
-    .build()
-profile = client.create_profile(body=create_profile_request)
+# Create a new profile with automatic recommended settings
+# Choose one of the fingerprints
+# Kameleo launches mobile profiles with our Chroma browser
+create_profile_request = CreateProfileRequest(
+    fingerprint_id=fingerprints[0].id,
+    name='automate mobile profiles on desktop example')
+profile = client.profile.create_profile(create_profile_request)
 
 # Start the profile
-client.start_profile_with_options(profile.id, body={
+client.profile.start_profile(profile.id, {
     # This allows you to click on elements using the cursor when emulating a touch screen in the browser.
     # If you leave this out, your script may time out after clicks and fail.
     'additionalOptions': [
@@ -68,4 +63,4 @@ print(f'The title is {driver.title}')
 time.sleep(5)
 
 # Stop the browser by stopping the Kameleo profile
-client.stop_profile(profile.id)
+client.profile.stop_profile(profile.id)

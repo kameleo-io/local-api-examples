@@ -1,6 +1,5 @@
 from kameleo.local_api_client import KameleoLocalApiClient
-from kameleo.local_api_client.builder_for_create_profile import BuilderForCreateProfile
-from kameleo.local_api_client.models import WebglMetaSpoofingOptions
+from kameleo.local_api_client.models import CreateProfileRequest, UpdateProfileRequest, WebglMetaChoice, WebglMetaSpoofingOptions
 import time
 import os
 
@@ -9,60 +8,69 @@ import os
 kameleo_port = os.getenv('KAMELEO_PORT', '5050')
 
 client = KameleoLocalApiClient(
-    endpoint=f'http://localhost:{kameleo_port}',
-    retry_total=0
+    endpoint=f'http://localhost:{kameleo_port}'
 )
 
-# Search Chrome Base Profiles
-base_profiles = client.search_base_profiles(
+# Search Chrome fingerprints
+# Possible deviceType value: desktop, mobile
+# Possible browserProduct value: chrome, firefox, edge, ...
+# Possible osFamily values: windows, macos, linux, android, ios
+# Examples of browserVersion values that limit the major version of the fingeprint: 135, >134, ...
+# You can use empty parameters as well, Kameleo provides recent and varied fingerprints by default
+fingerprints = client.fingerprint.search_fingerprints(
     device_type='desktop',
-    browser_product='chrome'
+    browser_product='chrome',
+    browser_version='>134',
 )
 
 # Create a new profile with recommended settings for browser fingerprinting protection
-# Choose one of the Chrome BaseProfiles
+# Choose one of the Chrome fingerprints
 # You can setup here all of the profile options like WebGL
-create_profile_request = BuilderForCreateProfile \
-    .for_base_profile(base_profiles[0].id) \
-    .set_name('create profile example') \
-    .set_recommended_defaults() \
-    .set_webgl('noise') \
-    .set_webgl_meta('manual', WebglMetaSpoofingOptions(vendor='Google Inc.',
-                                                       renderer='ANGLE (Intel(R) HD Graphics 630 Direct3D11 vs_5_0 ps_5_0)')) \
-    .set_start_page('https://kameleo.io') \
-    .set_password_manager('enabled') \
-    .build()
-profile = client.create_profile(body=create_profile_request)
+create_profile_request = CreateProfileRequest(
+    fingerprint_id=fingerprints[0].id,
+    language="es-es",
+    name='create profile example',
+    webgl='noise',
+    webgl_meta=WebglMetaChoice(
+        value='manual',
+        extra=WebglMetaSpoofingOptions(
+            vendor='Google Inc.',
+            renderer='ANGLE (Intel(R) HD Graphics 630 Direct3D11 vs_5_0 ps_5_0)')),
+    start_page='https://kameleo.io',
+    password_manager='enabled')
+profile = client.profile.create_profile(create_profile_request)
 
 # Start the browser profile
-client.start_profile(profile.id)
+client.profile.start_profile(profile.id)
 
 # Wait for 10 seconds
 time.sleep(10)
 
 # Stop the browser by stopping the Kameleo profile
-client.stop_profile(profile.id)
+client.profile.stop_profile(profile.id)
 
 # Duplicate the previously created profile
-duplicatedProfile = client.duplicate_profile(profile.id)
-print(f'Profile {duplicatedProfile.name} is created')
+duplicated_profile = client.profile.duplicate_profile(profile.id)
+print(f'Profile {duplicated_profile.name} is created')
 
 # Change every property that you want to update
-duplicatedProfile.name = 'duplicate profile example'
-duplicatedProfile.webgl_meta.value = 'automatic'
+update_profile_request = UpdateProfileRequest(
+    name = 'duplicate profile example',
+    webgl_meta = WebglMetaChoice(value='automatic')
+)
 
 # Send the update request and the response will be your updated profile
-duplicatedProfile = client.update_profile(duplicatedProfile.id, body=duplicatedProfile)
+duplicated_profile = client.profile.update_profile(duplicated_profile.id, update_profile_request)
 
 # Start the duplicated browser profile
-client.start_profile(duplicatedProfile.id)
+client.profile.start_profile(duplicated_profile.id)
 
 # Wait for 10 seconds
 time.sleep(10)
 
 # Stop the browser by stopping the Kameleo profile
-client.stop_profile(duplicatedProfile.id)
+client.profile.stop_profile(duplicated_profile.id)
 
 # Delete original profile
 # Profiles need to be deleted explicitly becase they are persisted so they are available after restarting Kameleo
-client.delete_profile(profile.id)
+client.profile.delete_profile(profile.id)

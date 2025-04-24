@@ -4,7 +4,6 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "lint": "eslint --fix --config ../.eslintrc.js ."
+    "start": "node index.js"
   }
 }

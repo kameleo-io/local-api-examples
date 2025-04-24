@@ -1,4 +1,5 @@
 ﻿using Kameleo.LocalApiClient;
+using Kameleo.LocalApiClient.Model;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Remote;
@@ -15,20 +16,18 @@ if (!int.TryParse(Environment.GetEnvironmentVariable("KAMELEO_PORT"), out var Ka
 }
 
 var client = new KameleoLocalApiClient(new Uri($"http://localhost:{KameleoPort}"));
-client.SetRetryPolicy(null);
 
-// Search Chrome Base Profiles
-var baseProfiles = await client.SearchBaseProfilesAsync(deviceType: "desktop", browserProduct: "chrome");
+// Search Chrome fingerprints
+var fingerprints = await client.Fingerprint.SearchFingerprintsAsync(deviceType: "desktop", browserProduct: "chrome");
 
 // Create a new profile with recommended settings
 // for browser fingerprint protection
-var requestBody = BuilderForCreateProfile
-    .ForBaseProfile(baseProfiles[0].Id)
-    .SetName("file upload example")
-    .SetRecommendedDefaults()
-    .Build();
+var createProfileRequest = new CreateProfileRequest(fingerprints[0].Id)
+{
+    Name = "file upload example",
+};
 
-var profile = await client.CreateProfileAsync(requestBody);
+var profile = await client.Profile.CreateProfileAsync(createProfileRequest);
 
 // Start the Kameleo profile and connect using WebDriver protocol
 var uri = new Uri($"http://localhost:{KameleoPort}/webdriver");
@@ -36,40 +35,21 @@ var opts = new ChromeOptions();
 opts.AddAdditionalOption("kameleo:profileId", profile.Id.ToString());
 var webdriver = new RemoteWebDriver(uri, opts);
 
-// Open file.io
-webdriver.Url = "https://www.file.io/";
-await Task.Delay(3000);
-
-// Accept cookies, optional step
-try
-{
-    var cookieConsentButton = webdriver.FindElementByClassName("fc-cta-consent");
-    cookieConsentButton.Click();
-}
-catch
-{
-}
+// Open uplad site
+webdriver.Url = "https://the-internet.herokuapp.com/upload";
+await Task.Delay(3_000);
 
 // Upload file
 var filePath = Path.Combine(Environment.CurrentDirectory, "kameleo.png");
-var fileInput = webdriver.FindElement(By.CssSelector("input[type=file]"));
+var fileInput = webdriver.FindElementByCssSelector("input[type=file]");
 fileInput.SendKeys(filePath);
+webdriver.FindElementById("file-submit").Click();
 
-// Wait for upload to complete
-var wait = new WebDriverWait(webdriver, TimeSpan.FromSeconds(15));
-wait.IgnoreExceptionTypes(typeof(StaleElementReferenceException));
-wait.Until(d => d.FindElements(By.TagName("div")).Any(i => i.Text == "Your file is ready to share!"));
-
-// Find uploaded file url
-var fileUrlDiv = webdriver.FindElementsByTagName("div").FirstOrDefault(i => i.Displayed && i.GetAttribute("tabindex") == "0");
-var fileUrl = fileUrlDiv.Text;
-
-Console.WriteLine(fileUrl);
-
-// View uploaded file
-webdriver.Navigate().GoToUrl(fileUrl);
+// Check file upload success
+var fileNameElement = webdriver.FindElementById("uploaded-files");
+Console.WriteLine("uploaded file name: " + fileNameElement.Text);
 
 await Task.Delay(5_000);
 
 // Stop the browser by stopping the Kameleo profile
-await client.StopProfileAsync(profile.Id);
+await client.Profile.StopProfileAsync(profile.Id);

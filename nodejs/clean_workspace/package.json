@@ -1,10 +1,9 @@
 {
   "name": "clean_workspace",
-  "description": "This script initializes a Kameleo client, creates and starts a customized Chrome browser profile with specific WebGL settings and a password manager enabled.",
+  "description": "Delete the profiles in your Kameleo Workspace.",
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "lint": "eslint --fix --config ../.eslintrc.js ."
+    "start": "node index.js"
   }
 }

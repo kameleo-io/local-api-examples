@@ -1,5 +1,5 @@
 from kameleo.local_api_client import KameleoLocalApiClient
-from kameleo.local_api_client.builder_for_create_profile import BuilderForCreateProfile
+from kameleo.local_api_client.models import CreateProfileRequest
 from selenium import webdriver
 import time
 import os
@@ -10,24 +10,21 @@ import random
 kameleo_port = os.getenv('KAMELEO_PORT', '5050')
 
 client = KameleoLocalApiClient(
-    endpoint=f'http://localhost:{kameleo_port}',
-    retry_total=0
+    endpoint=f'http://localhost:{kameleo_port}'
 )
 
-# Search Firefox Base Profiles
-base_profiles = client.search_base_profiles(
+# Search Firefox fingerprints
+fingerprints = client.fingerprint.search_fingerprints(
     device_type='desktop',
     browser_product='firefox'
 )
 
 # Create a new profile with recommended settings for browser fingerprinting protection
-# Choose one of the Firefox BaseProfiles
-create_profile_request = BuilderForCreateProfile \
-    .for_base_profile(base_profiles[0].id) \
-    .set_name('cookie robot example') \
-    .set_recommended_defaults() \
-    .build()
-profile = client.create_profile(body=create_profile_request)
+# Choose one of the Firefox fingerprints
+create_profile_request = CreateProfileRequest(
+    fingerprint_id=fingerprints[0].id,
+    name='cookie robot example')
+profile = client.profile.create_profile(create_profile_request)
 
 # Start the Kameleo profile and connect using WebDriver protocol
 options = webdriver.ChromeOptions()
@@ -37,7 +34,7 @@ driver = webdriver.Remote(
     options=options
 )
 
-allSites = ["instagram.com",
+all_sites = ["instagram.com",
     "linkedin.com",
     "ebay.com",
     "pinterest.com",
@@ -50,16 +47,16 @@ allSites = ["instagram.com",
     "foxnews.com"]
 
 # Select sites to collect cookies from
-sitesToVisit = []
-while len(sitesToVisit) < 5:
-    site = allSites[random.randint(0, len(allSites) - 1)]
-    if not site in set(sitesToVisit) :
-        sitesToVisit.append(site)
+sites_to_visit = []
+while len(sites_to_visit) < 5:
+    site = all_sites[random.randint(0, len(all_sites) - 1)]
+    if not site in set(sites_to_visit) :
+        sites_to_visit.append(site)
 
 # Warm up profile by visiting the randomly selected sites
-for site in sitesToVisit:
+for site in sites_to_visit:
     driver.get(f'https://{site}')
     time.sleep(random.randint(5, 15))
 
 # Stop the browser by stopping the Kameleo profile
-client.stop_profile(profile.id)
+client.profile.stop_profile(profile.id)
