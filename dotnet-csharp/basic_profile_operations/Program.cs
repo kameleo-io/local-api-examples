@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Kameleo.LocalApiClient;
-using Kameleo.LocalApiClient.Models;
+using Kameleo.LocalApiClient.Model;
 
 // This is the port Kameleo.CLI is listening on. Default value is 5050, but can be overridden in appsettings.json file
 if (!int.TryParse(Environment.GetEnvironmentVariable("KAMELEO_PORT"), out var KameleoPort))
@@ -10,81 +10,80 @@ if (!int.TryParse(Environment.GetEnvironmentVariable("KAMELEO_PORT"), out var Ka
 }
 
 var client = new KameleoLocalApiClient(new Uri($"http://localhost:{KameleoPort}"));
-client.SetRetryPolicy(null);
 
-// Search Chrome Base Profiles
+// Search Chrome fingerprints
 // Possible deviceType value: desktop, mobile
-// Possible browserProduct value: chrome, firefox, edge
+// Possible browserProduct value: chrome, firefox, edge, ...
 // Possible osFamily values: windows, macos, linux, android, ios
-// Possible language values e.g: en-en, es-es
-// You can use empty parameters as well
-var baseProfileList = await client.SearchBaseProfilesAsync("desktop", "windows", "chrome", "es-es");
+// Examples of browserVersion values that limit the major version of the fingeprint: 135, >134, ...
+// You can use empty parameters as well, Kameleo provides recent and varied fingerprints by default
+var fingerprints = await client.Fingerprint.SearchFingerprintsAsync("desktop", "windows", "chrome", ">134");
 
-Console.WriteLine("Available base profiles:");
-foreach (var baseProfile in baseProfileList)
+Console.WriteLine("Available fingerprints:");
+foreach (var fingerprint in fingerprints)
 {
     Console.WriteLine(
-        $"{baseProfile.Os.Family} {baseProfile.Os.Version} - {baseProfile.Browser.Product} {baseProfile.Browser.Version} - {baseProfile.Language}");
+        $"{fingerprint.Os.Family} {fingerprint.Os.VarVersion} - {fingerprint.Browser.Product} {fingerprint.Browser.VarVersion}");
 }
 
-// Select a random base profile
-var selectedBaseProfile = baseProfileList[Random.Shared.Next(0, baseProfileList.Count - 1)];
+// Select a random fingerprint
+var selectedFingerprint = fingerprints[Random.Shared.Next(0, fingerprints.Count - 1)];
 
 Console.WriteLine(
-    $"Selected base profile: {selectedBaseProfile.Os.Family} {selectedBaseProfile.Os.Version} - " +
-    $"{selectedBaseProfile.Browser.Product} {selectedBaseProfile.Browser.Version} - {selectedBaseProfile.Language}");
+    $"Selected fingerprint: {selectedFingerprint.Os.Family} {selectedFingerprint.Os.VarVersion} - " +
+    $"{selectedFingerprint.Browser.Product} {selectedFingerprint.Browser.VarVersion}");
 
-// Create a new profile with recommended settings using the selected Chrome BaseProfiles
+// Create a new profile with recommended settings using the selected Chrome fingerprints
 // You can setup here all of the profile options like WebGL, password manager and start page
-var createProfileRequest = BuilderForCreateProfile
-    .ForBaseProfile(selectedBaseProfile.Id)
-    .SetName("create profile example")
-    .SetRecommendedDefaults()
-    .SetWebgl("noise")
-    .SetWebglMeta("manual",
-        new WebglMetaSpoofingOptions("Google Inc.", "ANGLE (Intel(R) HD Graphics 630 Direct3D11 vs_5_0 ps_5_0)"))
-    .SetPasswordManager("enabled")
-    .SetStartPage("https://kameleo.io")
-    .Build();
+var createProfileRequest = new CreateProfileRequest(selectedFingerprint.Id)
+{
+    Name = "create profile example",
+    Language = "es-es",
+    Webgl = WebglSpoofingType.Noise,
+    WebglMeta = new (WebglMetaSpoofingType.Manual,
+        new WebglMetaSpoofingOptions("Google Inc.", "ANGLE (Intel(R) HD Graphics 630 Direct3D11 vs_5_0 ps_5_0)")),
+    PasswordManager = PasswordManagerType.Enabled,
+    StartPage = "https://kameleo.io",
+};
 
-var profile = await client.CreateProfileAsync(createProfileRequest);
+var profile = await client.Profile.CreateProfileAsync(createProfileRequest);
 
 Console.WriteLine($"Id of the created profile: {profile.Id}");
 
 // Start the profile
-await client.StartProfileAsync(profile.Id);
+await client.Profile.StartProfileAsync(profile.Id);
 
 // Wait for 10 seconds
 await Task.Delay(10_000);
 
 // Stop the profile
-await client.StopProfileAsync(profile.Id);
+await client.Profile.StopProfileAsync(profile.Id);
 
 // Duplicate the previously created profile
-var duplicatedProfile = await client.DuplicateProfileAsync(profile.Id);
+var duplicatedProfile = await client.Profile.DuplicateProfileAsync(profile.Id);
 
 Console.WriteLine($"Profile '{duplicatedProfile.Name}' is created");
 
 // Change every property that you want to update on the duplicate profile
 // Others should be the same
-var updateRequestBody = new UpdateProfileRequest(duplicatedProfile)
+var updateProfileRequest = new UpdateProfileRequest()
 {
     Name = "duplicate profile example",
-    WebglMeta = new WebglMetaSpoofingTypeWebglMetaSpoofingOptionsMultiLevelChoice("automatic")
+    WebglMeta = new WebglMetaChoice(WebglMetaSpoofingType.Automatic)
 };
 
 // Send the update request and the response will be your updated profile
-duplicatedProfile = await client.UpdateProfileAsync(duplicatedProfile.Id, updateRequestBody);
+duplicatedProfile = await client.Profile.UpdateProfileAsync(duplicatedProfile.Id, updateProfileRequest);
 
 // Start the profile
-await client.StartProfileAsync(duplicatedProfile.Id);
+await client.Profile.StartProfileAsync(duplicatedProfile.Id);
 
 // Wait for 10 seconds
 await Task.Delay(10_000);
 
 // Stop the profile
-await client.StopProfileAsync(duplicatedProfile.Id);
+await client.Profile.StopProfileAsync(duplicatedProfile.Id);
 
 // Delete original profile
 // Profiles need to be deleted explicitly becase they are persisted so they are available after restarting Kameleo
-await client.DeleteProfileAsync(profile.Id);
+await client.Profile.DeleteProfileAsync(profile.Id);

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Kameleo.LocalApiClient;
-using Kameleo.LocalApiClient.Models;
+using Kameleo.LocalApiClient.Model;
 
 // This is the port Kameleo.CLI is listening on. Default value is 5050, but can be overridden in appsettings.json file
 if (!int.TryParse(Environment.GetEnvironmentVariable("KAMELEO_PORT"), out var KameleoPort))
@@ -19,28 +19,26 @@ if (!int.TryParse(Environment.GetEnvironmentVariable("PROXY_PORT"), out var prox
 }
 
 var client = new KameleoLocalApiClient(new Uri($"http://localhost:{KameleoPort}"));
-client.SetRetryPolicy(null);
 
-// Search Firefox Base Profiles
-var baseProfileList = await client.SearchBaseProfilesAsync("desktop", null, "firefox", null);
+// Search Firefox fingerprints
+var fingerprints = await client.Fingerprint.SearchFingerprintsAsync("desktop", null, "firefox");
 
 // Create a new profile with recommended settings
-// Choose one of the Firefox BaseProfiles
+// Choose one of the Firefox fingerprints
 // You can set your proxy up in the setProxy method
-var createProfileRequest = BuilderForCreateProfile
-    .ForBaseProfile(baseProfileList[0].Id)
-    .SetName("start with proxy example")
-    .SetRecommendedDefaults()
-    .SetProxy("socks5", new Server(proxyHost, proxyPort, proxyUsername, proxyPassword))
-    .Build();
+var createProfileRequest = new CreateProfileRequest(fingerprints[0].Id)
+{
+    Name = "start with proxy example",
+    Proxy = new (ProxyConnectionType.Socks5, new Server(proxyHost, proxyPort, proxyUsername, proxyPassword))
+};
 
-var profile = await client.CreateProfileAsync(createProfileRequest);
+var profile = await client.Profile.CreateProfileAsync(createProfileRequest);
 
 // Start the profile
-await client.StartProfileAsync(profile.Id);
+await client.Profile.StartProfileAsync(profile.Id);
 
 // Wait for 10 seconds
 await Task.Delay(10_000);
 
 // Stop the profile
-await client.StopProfileAsync(profile.Id);
+await client.Profile.StopProfileAsync(profile.Id);

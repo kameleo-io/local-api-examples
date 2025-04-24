@@ -1,4 +1,5 @@
 ﻿using Kameleo.LocalApiClient;
+using Kameleo.LocalApiClient.Model;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Remote;
 using System;
@@ -12,19 +13,17 @@ if (!int.TryParse(Environment.GetEnvironmentVariable("KAMELEO_PORT"), out var Ka
 }
 
 var client = new KameleoLocalApiClient(new Uri($"http://localhost:{KameleoPort}"));
-client.SetRetryPolicy(null);
 
-// Search a Base Profiles
-var baseProfileList = await client.SearchBaseProfilesAsync(deviceType: "desktop", browserProduct: "firefox");
+// Search a fingerprint
+var fingerprints = await client.Fingerprint.SearchFingerprintsAsync(deviceType: "desktop", browserProduct: "firefox");
 
 // Create a new profile with recommended settings
-var createProfileRequest = BuilderForCreateProfile
-    .ForBaseProfile(baseProfileList[0].Id)
-    .SetName("cookie robot example")
-    .SetRecommendedDefaults()
-    .Build();
+var createProfileRequest = new CreateProfileRequest(fingerprints[0].Id)
+{
+    Name = "cookie robot example",
+};
 
-var profile = await client.CreateProfileAsync(createProfileRequest);
+var profile = await client.Profile.CreateProfileAsync(createProfileRequest);
 
 // Start the Kameleo profile and connect to it using WebDriver protocol
 var uri = new Uri($"http://localhost:{KameleoPort}/webdriver");
@@ -67,8 +66,8 @@ foreach (var site in sitesToVisit)
     webdriver.Navigate().GoToUrl($"https://{site}");
 
     // Wait for some random time
-    await Task.Delay(Random.Shared.Next(5000, 15000));
+    await Task.Delay(Random.Shared.Next(5_000, 15_000));
 }
 
 // Stop the profile
-await client.StopProfileAsync(profile.Id);
+await client.Profile.StopProfileAsync(profile.Id);

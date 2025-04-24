@@ -1,6 +1,5 @@
 from kameleo.local_api_client import KameleoLocalApiClient
-from kameleo.local_api_client.builder_for_create_profile import BuilderForCreateProfile
-from kameleo.local_api_client.models import Server
+from kameleo.local_api_client.models import CreateProfileRequest, ProxyChoice, Server
 import time
 import os
 
@@ -9,37 +8,36 @@ import os
 kameleo_port = os.getenv('KAMELEO_PORT', '5050')
 
 PROXY_HOST = os.getenv('PROXY_HOST', '<your_proxy_host>')
-PROXY_PORT = os.getenv('PROXY_PORT', '<your_proxy_port>')
+PROXY_PORT = int(os.getenv('PROXY_PORT', '<your_proxy_port>'))
 PROXY_USERNAME = os.getenv('PROXY_USERNAME', '<your_proxy_username>')
 PROXY_PASSWORD = os.getenv('PROXY_PASSWORD', '<your_proxy_password>')
 
 client = KameleoLocalApiClient(
-    endpoint=f'http://localhost:{kameleo_port}',
-    retry_total=0
+    endpoint=f'http://localhost:{kameleo_port}'
 )
 
-# Search Chrome Base Profiles
-base_profiles = client.search_base_profiles(
+# Search Chrome fingerprints
+fingerprints = client.fingerprint.search_fingerprints(
     device_type='desktop',
     browser_product='chrome'
 )
 
 # Create a new profile with recommended settings for browser fingerprinting protection
-# Choose one of the Chrome BaseProfiles
-# You can set your proxy up in the set_proxy method
-create_profile_request = BuilderForCreateProfile \
-    .for_base_profile(base_profiles[0].id) \
-    .set_name('start with proxy example') \
-    .set_recommended_defaults() \
-    .set_proxy('socks5', Server(host=PROXY_HOST, port=PROXY_PORT, id=PROXY_USERNAME, secret=PROXY_PASSWORD)) \
-    .build()
-profile = client.create_profile(body=create_profile_request)
+# Choose one of the Chrome fingerprints
+create_profile_request = CreateProfileRequest(
+    fingerprint_id=fingerprints[0].id,
+    name='start with proxy example',
+    proxy=ProxyChoice(
+        value='socks5',
+        extra=Server(host=PROXY_HOST, port=PROXY_PORT, id=PROXY_USERNAME, secret=PROXY_PASSWORD)
+    ))
+profile = client.profile.create_profile(create_profile_request)
 
 # Start the browser profile
-client.start_profile(profile.id)
+client.profile.start_profile(profile.id)
 
 # Wait for 10 seconds
 time.sleep(10)
 
 # Stop the browser by stopping the Kameleo profile
-client.stop_profile(profile.id)
+client.profile.stop_profile(profile.id)

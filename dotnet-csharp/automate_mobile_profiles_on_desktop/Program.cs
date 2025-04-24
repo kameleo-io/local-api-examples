@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Kameleo.LocalApiClient;
-using Kameleo.LocalApiClient.Models;
+using Kameleo.LocalApiClient.Model;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Remote;
@@ -15,23 +15,21 @@ if (!int.TryParse(Environment.GetEnvironmentVariable("KAMELEO_PORT"), out var Ka
 
 var client = new KameleoLocalApiClient(new Uri($"http://localhost:{KameleoPort}"));
 
-// Search for a mobile Base Profiles
-var baseProfileList = await client.SearchBaseProfilesAsync("mobile", "ios", "safari", "en-us");
+// Search for a mobile fingerprints
+var fingerprints = await client.Fingerprint.SearchFingerprintsAsync("mobile", "ios", "safari");
 
-// Create a new profile with recommended settings
-// Choose one of the Base Profiles
-// Set the launcher to 'chromium' so the mobile profile will be started in Chroma browser
-var createProfileRequest = BuilderForCreateProfile
-    .ForBaseProfile(baseProfileList[0].Id)
-    .SetName("automate mobile profiles on desktop example")
-    .SetRecommendedDefaults()
-    .SetLauncher("chromium")
-    .Build();
+// Create a new profile with automatic recommended settings
+// Choose one of the fingerprints
+// Kameleo launches mobile profiles with our Chroma browser
+var createProfileRequest = new CreateProfileRequest(fingerprints[0].Id)
+{
+    Name = "automate mobile profiles on desktop example",
+};
 
-var profile = await client.CreateProfileAsync(createProfileRequest);
+var profile = await client.Profile.CreateProfileAsync(createProfileRequest);
 
 // Start the profile
-await client.StartProfileWithOptionsAsync(profile.Id, new WebDriverSettings()
+await client.Profile.StartProfileAsync(profile.Id, new BrowserSettings()
 {
     AdditionalOptions = new List<Preference>
     {
@@ -60,4 +58,4 @@ Console.WriteLine($"The title is {title}");
 await Task.Delay(TimeSpan.FromSeconds(5));
 
 // Stop the browser by stopping the Kameleo profile
-await client.StopProfileAsync(profile.Id);
+await client.Profile.StopProfileAsync(profile.Id);

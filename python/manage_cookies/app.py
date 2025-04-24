@@ -1,6 +1,5 @@
 from kameleo.local_api_client import KameleoLocalApiClient
-from kameleo.local_api_client.builder_for_create_profile import BuilderForCreateProfile
-from kameleo.local_api_client.models import CookieRequest
+from kameleo.local_api_client.models import CreateProfileRequest, CookieRequest
 from selenium import webdriver
 import time
 import os
@@ -10,24 +9,21 @@ import os
 kameleo_port = os.getenv('KAMELEO_PORT', '5050')
 
 client = KameleoLocalApiClient(
-    endpoint=f'http://localhost:{kameleo_port}',
-    retry_total=0
+    endpoint=f'http://localhost:{kameleo_port}'
 )
 
-# Search Firefox Base Profiles
-base_profiles = client.search_base_profiles(
+# Search Firefox fingerprints
+fingerprints = client.fingerprint.search_fingerprints(
     device_type='desktop',
     browser_product='firefox'
 )
 
 # Create a new profile with recommended settings for browser fingerprinting protection
-# Choose one of the Firefox BaseProfiles
-create_profile_request = BuilderForCreateProfile \
-    .for_base_profile(base_profiles[0].id) \
-    .set_name('manage cookies example') \
-    .set_recommended_defaults() \
-    .build()
-profile = client.create_profile(body=create_profile_request)
+# Choose one of the Firefox fingerprints
+create_profile_request = CreateProfileRequest(
+    fingerprint_id=fingerprints[0].id,
+    name='manage cookies example')
+profile = client.profile.create_profile(create_profile_request)
 
 # Start the Kameleo profile and connect using WebDriver protocol
 options = webdriver.ChromeOptions()
@@ -48,10 +44,10 @@ driver.get('https://www.nytimes.com')
 time.sleep(5)
 
 # Stop the browser by stopping the Kameleo profile
-client.stop_profile(profile.id)
+client.profile.stop_profile(profile.id)
 
 # You can list all of your cookies
-cookie_list = client.list_cookies(profile.id)
+cookie_list = client.cookie.list_cookies(profile.id)
 print(f'There are {len(cookie_list)} cookies in the profile')
 
 # You can modify cookie or you can add new
@@ -60,7 +56,7 @@ new_cookie = CookieRequest(domain=cookie.domain, name=cookie.name, path=cookie.p
                            host_only=cookie.host_only, http_only=cookie.http_only, secure=cookie.secure,
                            same_site=cookie.same_site, expiration_date=cookie.expiration_date)
 cookie_array = [new_cookie]
-client.add_cookies(profile.id, body=cookie_array)
+client.cookie.add_cookies(profile.id, cookie_array)
 
 # You can delete all cookies of the profile
-client.delete_cookies(profile.id)
+client.cookie.delete_cookies(profile.id)

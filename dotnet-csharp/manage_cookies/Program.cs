@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Kameleo.LocalApiClient;
-using Kameleo.LocalApiClient.Models;
+using Kameleo.LocalApiClient.Model;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Remote;
 
@@ -13,19 +13,17 @@ if (!int.TryParse(Environment.GetEnvironmentVariable("KAMELEO_PORT"), out var Ka
 }
 
 var client = new KameleoLocalApiClient(new Uri($"http://localhost:{KameleoPort}"));
-client.SetRetryPolicy(null);
 
-// Search a Base Profiles
-var baseProfileList = await client.SearchBaseProfilesAsync(deviceType: "desktop", browserProduct: "firefox");
+// Search a fingerprint
+var fingerprints = await client.Fingerprint.SearchFingerprintsAsync(deviceType: "desktop", browserProduct: "chrome");
 
 // Create a new profile with recommended settings
-var createProfileRequest = BuilderForCreateProfile
-    .ForBaseProfile(baseProfileList[0].Id)
-    .SetName("manage cookies example")
-    .SetRecommendedDefaults()
-    .Build();
+var createProfileRequest = new CreateProfileRequest(fingerprints[0].Id)
+{
+    Name = "manage cookies example",
+};
 
-var profile = await client.CreateProfileAsync(createProfileRequest);
+var profile = await client.Profile.CreateProfileAsync(createProfileRequest);
 
 // Start the Kameleo profile and connect to it using WebDriver protocol
 var uri = new Uri($"http://localhost:{KameleoPort}/webdriver");
@@ -45,10 +43,10 @@ webdriver.Navigate().GoToUrl("https://www.youtube.com");
 await Task.Delay(5_000);
 
 // Stop the profile
-await client.StopProfileAsync(profile.Id);
+await client.Profile.StopProfileAsync(profile.Id);
 
 // You can list all of your cookies
-var cookieList = await client.ListCookiesAsync(profile.Id);
+var cookieList = await client.Cookie.ListCookiesAsync(profile.Id);
 Console.WriteLine("The cookies of the profile: ");
 foreach (var cookie in cookieList)
 {
@@ -59,7 +57,7 @@ foreach (var cookie in cookieList)
 var newCookie = cookieList[0];
 newCookie.Value = "123";
 var cookiesArray = new List<CookieRequest> { new CookieRequest(newCookie) };
-await client.AddCookiesAsync(profile.Id, cookiesArray);
+await client.Cookie.AddCookiesAsync(profile.Id, cookiesArray);
 
 // You can delete all cookies of the profile
-await client.DeleteCookiesAsync(profile.Id);
+await client.Cookie.DeleteCookiesAsync(profile.Id);

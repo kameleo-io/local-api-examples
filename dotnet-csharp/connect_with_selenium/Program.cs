@@ -1,5 +1,6 @@
 ﻿using System;
 using Kameleo.LocalApiClient;
+using Kameleo.LocalApiClient.Model;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Remote;
@@ -11,20 +12,18 @@ if (!int.TryParse(Environment.GetEnvironmentVariable("KAMELEO_PORT"), out var Ka
 }
 
 var client = new KameleoLocalApiClient(new Uri($"http://localhost:{KameleoPort}"));
-client.SetRetryPolicy(null);
 
-// Search Chrome Base Profiles
-var baseProfiles = await client.SearchBaseProfilesAsync(deviceType: "desktop", browserProduct: "chrome");
+// Search Chrome fingerprints
+var fingerprints = await client.Fingerprint.SearchFingerprintsAsync(deviceType: "desktop", browserProduct: "chrome");
 
 // Create a new profile with recommended settings
 // for browser fingerprint protection
-var requestBody = BuilderForCreateProfile
-    .ForBaseProfile(baseProfiles[0].Id)
-    .SetName("connect to Selenium example")
-    .SetRecommendedDefaults()
-    .Build();
+var createProfileRequest = new CreateProfileRequest(fingerprints[0].Id)
+{
+    Name = "connect to Selenium example",
+};
 
-var profile = await client.CreateProfileAsync(requestBody);
+var profile = await client.Profile.CreateProfileAsync(createProfileRequest);
 
 // Start the Kameleo profile and connect using WebDriver protocol
 var uri = new Uri($"http://localhost:{KameleoPort}/webdriver");
@@ -43,4 +42,4 @@ var title = webdriver.Title;
 Console.WriteLine($"The title is {title}");
 
 // Stop the browser by stopping the Kameleo profile
-await client.StopProfileAsync(profile.Id);
+await client.Profile.StopProfileAsync(profile.Id);
